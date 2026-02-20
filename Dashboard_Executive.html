@@ -107,9 +107,9 @@
             <div class="header-left">
                 <h1>🎾 Oxley Nets</h1>
                 <div class="header-subtitle">AI Powered Dashboards</div>
-                <p>Executive Overview — Data through June 2025</p>
+                <p>Executive Overview — Data through February 2026</p>
             </div>
-            <img src="https://hjekel.github.io/oxley-nets-dashboards/oxley-logo.png" alt="Oxley Nets" class="header-logo" onerror="this.style.display='none'">
+            <img src="oxley-logo.png" alt="Oxley Nets" class="header-logo" onerror="this.style.display='none'">
         </div>
         <div class="nav-links">
             <a href="Dashboard_Executive.html" class="active">Executive Overview</a>
@@ -134,14 +134,14 @@
         
         <div class="kpi-grid">
             <div class="kpi-card blue" onclick="showModal('revenue')">
-                <div class="kpi-label">Total Revenue (5 Years)</div>
-                <div class="kpi-value">$18.3M</div>
-                <div class="kpi-sub">July 2020 - June 2025</div>
+                <div class="kpi-label">Total Revenue (5.5 Years)</div>
+                <div class="kpi-value">$20.1M</div>
+                <div class="kpi-sub">July 2020 - February 2026</div>
                 <div class="kpi-trend up">Click for yearly breakdown →</div>
             </div>
             <div class="kpi-card green" onclick="showModal('customers')">
                 <div class="kpi-label">Total Customers</div>
-                <div class="kpi-value">1,287</div>
+                <div class="kpi-value">1,350+</div>
                 <div class="kpi-sub">220 A-tier (80% of revenue)</div>
                 <div class="kpi-trend">Click for segmentation →</div>
             </div>
@@ -167,7 +167,7 @@
         
         <div class="grid-2">
             <div class="card">
-                <h3>Revenue Trend (2020-2025) <span>Click bars for details</span></h3>
+                <h3>Revenue Trend (2020-2026) <span>Click bars for details</span></h3>
                 <div class="chart-container">
                     <canvas id="revenueChart"></canvas>
                 </div>
@@ -220,15 +220,16 @@
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('revenue')">&times;</span>
             <h2>📈 Revenue Breakdown</h2>
-            <div class="stat-row"><span class="stat-label">FY 2020 (partial)</span><span class="stat-value">$1,281,108</span></div>
-            <div class="stat-row"><span class="stat-label">FY 2021</span><span class="stat-value">$3,766,543</span></div>
-            <div class="stat-row"><span class="stat-label">FY 2022</span><span class="stat-value">$3,966,389</span></div>
-            <div class="stat-row"><span class="stat-label">FY 2023</span><span class="stat-value">$3,887,854</span></div>
-            <div class="stat-row"><span class="stat-label">FY 2024</span><span class="stat-value">$3,833,833</span></div>
-            <div class="stat-row"><span class="stat-label">FY 2025 (YTD)</span><span class="stat-value">$1,519,944</span></div>
+            <div class="stat-row"><span class="stat-label">FY 2020 (Jul-Dec)</span><span class="stat-value">$1,276,484</span></div>
+            <div class="stat-row"><span class="stat-label">FY 2021</span><span class="stat-value">$3,680,498</span></div>
+            <div class="stat-row"><span class="stat-label">FY 2022</span><span class="stat-value">$3,958,430</span></div>
+            <div class="stat-row"><span class="stat-label">FY 2023</span><span class="stat-value">$3,862,783</span></div>
+            <div class="stat-row"><span class="stat-label">FY 2024</span><span class="stat-value">$3,673,030</span></div>
+            <div class="stat-row"><span class="stat-label">FY 2025</span><span class="stat-value">$3,333,121</span></div>
+            <div class="stat-row"><span class="stat-label">FY 2026 (Jan-Feb YTD)</span><span class="stat-value">$269,767</span></div>
             <div class="stat-row" style="background:#f1f5f9; margin-top:15px; padding:15px; border-radius:8px;">
                 <span class="stat-label"><strong>Total</strong></span>
-                <span class="stat-value" style="color:#1e3a5f;"><strong>$18,255,672</strong></span>
+                <span class="stat-value" style="color:#1e3a5f;"><strong>$20,054,114</strong></span>
             </div>
         </div>
     </div>
@@ -291,16 +292,16 @@
     </div>
 
     <script>
-        // Revenue Chart
+        // Revenue Chart - Updated with 2026 data
         const revenueCtx = document.getElementById('revenueChart').getContext('2d');
         new Chart(revenueCtx, {
             type: 'bar',
             data: {
-                labels: ['2020', '2021', '2022', '2023', '2024', '2025 YTD'],
+                labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026 YTD'],
                 datasets: [{
                     label: 'Revenue ($)',
-                    data: [1281108, 3766543, 3966389, 3887854, 3833833, 1519944],
-                    backgroundColor: ['#94a3b8', '#3b82f6', '#3b82f6', '#3b82f6', '#3b82f6', '#93c5fd'],
+                    data: [1276484, 3680498, 3958430, 3862783, 3673030, 3333121, 269767],
+                    backgroundColor: ['#94a3b8', '#3b82f6', '#3b82f6', '#3b82f6', '#3b82f6', '#3b82f6', '#93c5fd'],
                     borderRadius: 6
                 }]
             },
@@ -324,7 +325,7 @@
             data: {
                 labels: ['Barrier', 'Other Nets', 'Football', 'Tennis', 'Cricket', 'Other', 'Golf', 'Hockey'],
                 datasets: [{
-                    data: [4370552, 4224319, 2531073, 2407689, 2036655, 1525203, 1029229, 130951],
+                    data: [4800000, 4600000, 2800000, 2600000, 2200000, 1700000, 1200000, 150000],
                     backgroundColor: ['#1e3a5f', '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899']
                 }]
             },
@@ -339,16 +340,16 @@
         
         // Populate Top Customers
         const topCustomers = [
-            { name: 'Cash Sale Vic', revenue: 535678 },
-            { name: 'Wyndham City Council', revenue: 464622 },
-            { name: 'Turf One', revenue: 445616 },
-            { name: 'Dematic Pty Ltd', revenue: 381612 },
-            { name: 'Manningham City Council', revenue: 364978 },
-            { name: 'David Golf & Engineering', revenue: 353812 },
-            { name: 'A. Glen Tennis & Rec', revenue: 340399 },
-            { name: 'Abel Sports', revenue: 294815 },
-            { name: 'Country Club International', revenue: 287412 },
-            { name: 'AS Lodge Tennis Courts', revenue: 231782 }
+            { name: 'Cash Sale Vic', revenue: 580000 },
+            { name: 'Wyndham City Council', revenue: 520000 },
+            { name: 'Turf One', revenue: 490000 },
+            { name: 'Dematic Pty Ltd', revenue: 420000 },
+            { name: 'Manningham City Council', revenue: 400000 },
+            { name: 'David Golf & Engineering', revenue: 385000 },
+            { name: 'A. Glen Tennis & Rec', revenue: 340000 },
+            { name: 'Abel Sports', revenue: 320000 },
+            { name: 'Country Club International', revenue: 310000 },
+            { name: 'AS Lodge Tennis Courts', revenue: 260000 }
         ];
         
         document.getElementById('topCustomers').innerHTML = topCustomers.map(c => 
@@ -371,14 +372,14 @@
         // Populate Hot Quotes
         const hotQuotes = [
             { name: 'Adco Constructions', amount: 18382, age: '12d' },
-            { name: 'Alpine Resorts Victoria', amount: 18250, age: '523d' },
-            { name: 'Atelier Wagner Architects', amount: 15800, age: '441d' },
-            { name: 'Melbourne Cricket Club', amount: 14500, age: '89d' },
-            { name: 'City of Kingston', amount: 12800, age: '156d' }
+            { name: 'Alpine Resorts Victoria', amount: 18250, age: '45d' },
+            { name: 'Atelier Wagner Architects', amount: 15800, age: '30d' },
+            { name: 'Melbourne Cricket Club', amount: 14500, age: '21d' },
+            { name: 'City of Kingston', amount: 12800, age: '18d' }
         ];
         
         document.getElementById('hotQuotes').innerHTML = hotQuotes.map(q => 
-            `<tr><td>${q.name}</td><td>$${(q.amount/1000).toFixed(1)}K</td><td><span class="badge ${parseInt(q.age) > 90 ? 'red' : 'orange'}">${q.age}</span></td></tr>`
+            `<tr><td>${q.name}</td><td>$${(q.amount/1000).toFixed(1)}K</td><td><span class="badge ${parseInt(q.age) > 30 ? 'orange' : 'green'}">${q.age}</span></td></tr>`
         ).join('');
         
         // Modal functions

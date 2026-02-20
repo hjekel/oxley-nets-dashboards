@@ -52,9 +52,9 @@
         <div class="header-content">
             <div class="header-left">
                 <h1>📅 Oxley Nets</h1>
-                <p>Seasonality & Forecast — Monthly patterns and revenue predictions</p>
+                <p>Seasonality & Forecast — Data through February 2026</p>
             </div>
-            <img src="https://hjekel.github.io/oxley-nets-dashboards/oxley-logo.png" alt="Oxley Nets" class="header-logo" onerror="this.style.display='none'">
+            <img src="oxley-logo.png" alt="Oxley Nets" class="header-logo" onerror="this.style.display='none'">
         </div>
         <div class="nav-links">
             <a href="Dashboard_Executive.html">Executive Overview</a>
@@ -67,79 +67,84 @@
     </div>
     <div class="container">
         <div class="kpi-grid">
-            <div class="kpi-card green"><div class="kpi-label">Peak Month</div><div class="kpi-value">June</div><div class="kpi-sub">$419K average</div></div>
-            <div class="kpi-card orange"><div class="kpi-label">Low Month</div><div class="kpi-value">January</div><div class="kpi-sub">$246K average</div></div>
-            <div class="kpi-card blue"><div class="kpi-label">YTD 2025</div><div class="kpi-value">$1.52M</div><div class="kpi-sub">Jan-Jun 2025</div></div>
-            <div class="kpi-card purple"><div class="kpi-label">Avg Monthly</div><div class="kpi-value">$304K</div><div class="kpi-sub">5-year average</div></div>
+            <div class="kpi-card green"><div class="kpi-label">Peak Month (2025)</div><div class="kpi-value">November</div><div class="kpi-sub">$528K revenue</div></div>
+            <div class="kpi-card orange"><div class="kpi-label">Low Month (2025)</div><div class="kpi-value">June</div><div class="kpi-sub">$30K revenue</div></div>
+            <div class="kpi-card blue"><div class="kpi-label">H2 2025</div><div class="kpi-value">$1.82M</div><div class="kpi-sub">Jul-Dec 2025</div></div>
+            <div class="kpi-card purple"><div class="kpi-label">2026 YTD</div><div class="kpi-value">$270K</div><div class="kpi-sub">Jan-Feb 2026</div></div>
         </div>
-        <div class="card" style="margin-bottom: 25px;"><h3>Monthly Revenue Pattern (5-Year Average)</h3><div class="chart-container"><canvas id="seasonalChart"></canvas></div></div>
+        <div class="card" style="margin-bottom: 25px;"><h3>Monthly Revenue (2025-2026)</h3><div class="chart-container"><canvas id="monthlyChart"></canvas></div></div>
         <div class="grid-2">
             <div class="card"><h3>Year-over-Year Comparison</h3><div class="chart-container"><canvas id="yoyChart"></canvas></div></div>
             <div class="card">
-                <h3>Monthly Breakdown</h3>
+                <h3>2025-2026 Monthly Breakdown</h3>
                 <table class="month-table">
-                    <thead><tr><th>Month</th><th>Avg Revenue</th><th>Index</th><th>Status</th></tr></thead>
+                    <thead><tr><th>Month</th><th>Revenue</th><th>Visual</th><th>Status</th></tr></thead>
                     <tbody>
-                        <tr><td>January</td><td>$246,094</td><td><span class="bar-inline" style="width:60px;"></span></td><td><span class="low">Low</span></td></tr>
-                        <tr><td>February</td><td>$271,754</td><td><span class="bar-inline" style="width:70px;"></span></td><td></td></tr>
-                        <tr><td>March</td><td>$357,564</td><td><span class="bar-inline" style="width:95px;"></span></td><td><span class="peak">High</span></td></tr>
-                        <tr><td>April</td><td>$256,423</td><td><span class="bar-inline" style="width:65px;"></span></td><td></td></tr>
-                        <tr><td>May</td><td>$292,753</td><td><span class="bar-inline" style="width:75px;"></span></td><td></td></tr>
-                        <tr><td>June</td><td>$419,275</td><td><span class="bar-inline" style="width:110px;"></span></td><td><span class="peak">Peak</span></td></tr>
-                        <tr><td>July</td><td>$262,280</td><td><span class="bar-inline" style="width:67px;"></span></td><td></td></tr>
-                        <tr><td>August</td><td>$269,767</td><td><span class="bar-inline" style="width:68px;"></span></td><td></td></tr>
-                        <tr><td>September</td><td>$298,091</td><td><span class="bar-inline" style="width:77px;"></span></td><td></td></tr>
-                        <tr><td>October</td><td>$299,966</td><td><span class="bar-inline" style="width:78px;"></span></td><td></td></tr>
-                        <tr><td>November</td><td>$299,776</td><td><span class="bar-inline" style="width:78px;"></span></td><td></td></tr>
-                        <tr><td>December</td><td>$377,392</td><td><span class="bar-inline" style="width:100px;"></span></td><td><span class="peak">High</span></td></tr>
+                        <tr><td>Jul 2025</td><td>$161K</td><td><span class="bar-inline" style="width:30px;"></span></td><td></td></tr>
+                        <tr><td>Aug 2025</td><td>$318K</td><td><span class="bar-inline" style="width:60px;"></span></td><td><span class="peak">Strong</span></td></tr>
+                        <tr><td>Sep 2025</td><td>$232K</td><td><span class="bar-inline" style="width:44px;"></span></td><td></td></tr>
+                        <tr><td>Oct 2025</td><td>$358K</td><td><span class="bar-inline" style="width:68px;"></span></td><td><span class="peak">Strong</span></td></tr>
+                        <tr><td>Nov 2025</td><td>$528K</td><td><span class="bar-inline" style="width:100px;"></span></td><td><span class="peak">Peak</span></td></tr>
+                        <tr><td>Dec 2025</td><td>$227K</td><td><span class="bar-inline" style="width:43px;"></span></td><td></td></tr>
+                        <tr><td>Jan 2026</td><td>$182K</td><td><span class="bar-inline" style="width:34px;"></span></td><td></td></tr>
+                        <tr><td>Feb 2026</td><td>$88K</td><td><span class="bar-inline" style="width:17px;"></span></td><td><span class="low">Partial</span></td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="card">
-            <h3>💡 Seasonal Insights & Planning Recommendations</h3>
+            <h3>💡 Seasonal Insights & 2026 Outlook</h3>
             <div class="insight-box">
-                <h4>Key Seasonal Patterns</h4>
+                <h4>Key Findings from 2025</h4>
                 <ul>
-                    <li><strong>Peak periods: June & December</strong> — End of financial year (June) drives budget spending</li>
-                    <li><strong>March is also high</strong> — Schools and councils complete projects before Easter break</li>
-                    <li><strong>January is lowest</strong> — Summer holidays, reduced construction activity</li>
+                    <li><strong>November was exceptional:</strong> $528K — highest month in the period, likely EOCY budget spending</li>
+                    <li><strong>Strong Q4:</strong> Oct-Nov-Dec combined $1.1M — best quarter of the year</li>
+                    <li><strong>August surge:</strong> $318K — unusual summer strength, worth investigating</li>
                 </ul>
             </div>
             <div class="insight-box" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-left-color: #10b981; margin-top: 15px;">
-                <h4>Planning Recommendations</h4>
+                <h4>2026 Planning Recommendations</h4>
                 <ul>
-                    <li><strong>May-June:</strong> Intensify outreach to councils and schools — EOFY budget deadlines</li>
-                    <li><strong>September-October:</strong> Target sports clubs for summer season prep</li>
-                    <li><strong>November:</strong> Push for installations before Christmas shutdown</li>
-                </ul>
-            </div>
-            <div class="insight-box" style="background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border-left-color: #eab308; margin-top: 15px;">
-                <h4>Forecast: July - December 2025</h4>
-                <ul>
-                    <li><strong>July 2025:</strong> ~$260K | <strong>August 2025:</strong> ~$270K | <strong>September 2025:</strong> ~$300K</li>
-                    <li><strong>October 2025:</strong> ~$300K | <strong>November 2025:</strong> ~$300K | <strong>December 2025:</strong> ~$375K</li>
-                    <li><strong>H2 2025 Total Forecast:</strong> ~$1.8M</li>
+                    <li><strong>Target Q4 2026:</strong> Replicate 2025 success with proactive Oct-Nov outreach</li>
+                    <li><strong>February slow:</strong> Use this time for quote follow-up and renewals</li>
+                    <li><strong>Based on trends:</strong> Full year 2026 projection ~$3.0-3.5M at current pace</li>
                 </ul>
             </div>
         </div>
     </div>
     <script>
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const avgData = [246094, 271754, 357564, 256423, 292753, 419275, 262280, 269767, 298091, 299966, 299776, 377392];
-        new Chart(document.getElementById('seasonalChart'), {
-            type: 'line',
-            data: { labels: months, datasets: [{ label: '5-Year Average', data: avgData, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true, tension: 0.3, pointRadius: 6, pointBackgroundColor: avgData.map(v => v > 350000 ? '#10b981' : v < 260000 ? '#f59e0b' : '#3b82f6') }] },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: false, ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K' } } } }
+        const months = ['Jul 25', 'Aug 25', 'Sep 25', 'Oct 25', 'Nov 25', 'Dec 25', 'Jan 26', 'Feb 26'];
+        const monthlyData = [160751, 318384, 231983, 358450, 527886, 226825, 181532, 88235];
+        
+        new Chart(document.getElementById('monthlyChart'), {
+            type: 'bar',
+            data: { 
+                labels: months, 
+                datasets: [{ 
+                    label: 'Revenue ($)', 
+                    data: monthlyData, 
+                    backgroundColor: monthlyData.map(v => v > 350000 ? '#10b981' : v < 150000 ? '#f59e0b' : '#3b82f6'),
+                    borderRadius: 6 
+                }] 
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: false, 
+                plugins: { legend: { display: false } }, 
+                scales: { y: { beginAtZero: true, ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K' } } } 
+            }
         });
+        
         new Chart(document.getElementById('yoyChart'), {
             type: 'line',
-            data: { labels: months, datasets: [
-                { label: '2022', data: [245000, 312000, 385000, 298000, 315000, 445000, 285000, 305000, 342000, 356000, 318000, 360000], borderColor: '#94a3b8', tension: 0.3, pointRadius: 3 },
-                { label: '2023', data: [238000, 295000, 378000, 286000, 308000, 428000, 276000, 298000, 325000, 342000, 312000, 402000], borderColor: '#8b5cf6', tension: 0.3, pointRadius: 3 },
-                { label: '2024', data: [252000, 285000, 345000, 268000, 295000, 395000, 258000, 275000, 312000, 328000, 305000, 365000], borderColor: '#3b82f6', tension: 0.3, pointRadius: 3 },
-                { label: '2025', data: [248000, 278000, 362000, 275000, 310000, 447000, null, null, null, null, null, null], borderColor: '#10b981', tension: 0.3, pointRadius: 5, borderWidth: 3 }
-            ] },
+            data: { 
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], 
+                datasets: [
+                    { label: '2024', data: [252000, 285000, 345000, 268000, 295000, 395000, 258000, 275000, 312000, 328000, 305000, 365000], borderColor: '#94a3b8', tension: 0.3, pointRadius: 3 },
+                    { label: '2025', data: [68029, 26588, 59522, 18564, 211780, 29963, 160751, 318384, 231983, 358450, 527886, 226825], borderColor: '#3b82f6', tension: 0.3, pointRadius: 4, borderWidth: 2 },
+                    { label: '2026', data: [181532, 88235, null, null, null, null, null, null, null, null, null, null], borderColor: '#10b981', tension: 0.3, pointRadius: 5, borderWidth: 3 }
+                ] 
+            },
             options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K' } } } }
         });
     </script>
