@@ -9,9 +9,13 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; color: #1e293b; }
         
-        .header { background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); color: white; padding: 20px 40px; }
+        .header { background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); color: white; padding: 20px 40px; position: relative; }
+        .header-content { display: flex; justify-content: space-between; align-items: flex-start; }
+        .header-left { flex: 1; }
         .header h1 { font-size: 28px; font-weight: 600; }
-        .header p { opacity: 0.8; margin-top: 5px; }
+        .header-subtitle { font-size: 16px; color: #60a5fa; margin-top: 4px; font-weight: 500; }
+        .header p { opacity: 0.8; margin-top: 5px; font-size: 14px; }
+        .header-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-left: 20px; }
         
         .nav-links { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
         .nav-links a { background: rgba(255,255,255,0.15); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 13px; transition: all 0.2s; }
@@ -47,6 +51,13 @@
         
         @media (max-width: 1024px) {
             .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .header { padding: 15px 20px; }
+            .header h1 { font-size: 22px; }
+            .header-logo { width: 50px; height: 50px; }
+            .container { padding: 15px; }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .kpi-card { padding: 16px; }
+            .kpi-value { font-size: 24px; }
         }
         
         .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
@@ -92,10 +103,16 @@
 </head>
 <body>
     <div class="header">
-        <h1>🎾 Oxley Nets AI Powered</h1>
-        <p>Executive Overview — Data through June 2025</p>
+        <div class="header-content">
+            <div class="header-left">
+                <h1>🎾 Oxley Nets</h1>
+                <div class="header-subtitle">AI Powered Dashboards</div>
+                <p>Executive Overview — Data through June 2025</p>
+            </div>
+            <img src="https://hjekel.github.io/oxley-nets-dashboards/oxley-logo.png" alt="Oxley Nets" class="header-logo" onerror="this.style.display='none'">
+        </div>
         <div class="nav-links">
-            <a href="#" class="active">Executive Overview</a>
+            <a href="Dashboard_Executive.html" class="active">Executive Overview</a>
             <a href="Dashboard_Renewals.html">Renewal Opportunities</a>
             <a href="Dashboard_Quotes.html">Quote Pipeline</a>
             <a href="Dashboard_Customers.html">Customer Health</a>
@@ -105,7 +122,6 @@
     </div>
     
     <div class="container">
-        <!-- Alert Banner -->
         <div class="alert-banner">
             <h3>🔔 Priority Alerts</h3>
             <ul>
@@ -116,7 +132,6 @@
             </ul>
         </div>
         
-        <!-- KPI Cards -->
         <div class="kpi-grid">
             <div class="kpi-card blue" onclick="showModal('revenue')">
                 <div class="kpi-label">Total Revenue (5 Years)</div>
@@ -150,7 +165,6 @@
             </div>
         </div>
         
-        <!-- Charts Row -->
         <div class="grid-2">
             <div class="card">
                 <h3>Revenue Trend (2020-2025) <span>Click bars for details</span></h3>
@@ -166,7 +180,6 @@
             </div>
         </div>
         
-        <!-- Tables Row -->
         <div class="grid-3">
             <div class="card">
                 <h3>Top 10 Customers <span>All time</span></h3>
@@ -191,7 +204,6 @@
             </div>
         </div>
         
-        <!-- Quick Actions -->
         <div class="card">
             <h3>Quick Actions</h3>
             <div class="quick-actions">

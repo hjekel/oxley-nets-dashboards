@@ -10,8 +10,11 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; color: #1e293b; }
         
         .header { background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); color: white; padding: 20px 40px; }
+        .header-content { display: flex; justify-content: space-between; align-items: flex-start; }
+        .header-left { flex: 1; }
         .header h1 { font-size: 28px; font-weight: 600; }
         .header p { opacity: 0.8; margin-top: 5px; }
+        .header-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-left: 20px; }
         
         .nav-links { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
         .nav-links a { background: rgba(255,255,255,0.15); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 13px; transition: all 0.2s; }
@@ -37,7 +40,13 @@
         .kpi-sub { font-size: 13px; color: #64748b; }
         
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
-        @media (max-width: 1024px) { .grid-2 { grid-template-columns: 1fr; } }
+        @media (max-width: 1024px) { 
+            .grid-2 { grid-template-columns: 1fr; }
+            .header { padding: 15px 20px; }
+            .header h1 { font-size: 22px; }
+            .header-logo { width: 50px; height: 50px; }
+            .container { padding: 15px; }
+        }
         
         .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .card h3 { font-size: 16px; color: #1e293b; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
@@ -50,6 +59,12 @@
         .call-list-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 10px; padding: 14px 16px; border-bottom: 1px solid #e2e8f0; font-size: 13px; cursor: pointer; transition: background 0.2s; }
         .call-list-row:hover { background: #f1f5f9; }
         .call-list-row:last-child { border-bottom: none; }
+        
+        @media (max-width: 768px) {
+            .call-list-header, .call-list-row { grid-template-columns: 1fr 1fr; font-size: 12px; }
+            .call-list-header > div:nth-child(3), .call-list-header > div:nth-child(4),
+            .call-list-row > div:nth-child(3), .call-list-row > div:nth-child(4) { display: none; }
+        }
         
         .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
         .badge.red { background: #fee2e2; color: #dc2626; }
@@ -80,11 +95,16 @@
 </head>
 <body>
     <div class="header">
-        <h1>🔄 Renewal Opportunities</h1>
-        <p>Customers in replacement window based on product lifecycle</p>
+        <div class="header-content">
+            <div class="header-left">
+                <h1>🔄 Oxley Nets</h1>
+                <p>Renewal Opportunities — Customers in replacement window</p>
+            </div>
+            <img src="https://hjekel.github.io/oxley-nets-dashboards/oxley-logo.png" alt="Oxley Nets" class="header-logo" onerror="this.style.display='none'">
+        </div>
         <div class="nav-links">
             <a href="Dashboard_Executive.html">Executive Overview</a>
-            <a href="#" class="active">Renewal Opportunities</a>
+            <a href="Dashboard_Renewals.html" class="active">Renewal Opportunities</a>
             <a href="Dashboard_Quotes.html">Quote Pipeline</a>
             <a href="Dashboard_Customers.html">Customer Health</a>
             <a href="Dashboard_Products.html">Product Performance</a>
@@ -93,7 +113,6 @@
     </div>
     
     <div class="container">
-        <!-- KPI Cards -->
         <div class="kpi-grid">
             <div class="kpi-card red" onclick="filterByUrgency('overdue')">
                 <div class="kpi-label">🚨 Overdue</div>
@@ -117,7 +136,6 @@
             </div>
         </div>
         
-        <!-- Charts -->
         <div class="grid-2">
             <div class="card">
                 <h3>Opportunities by Category <span>Click to filter</span></h3>
@@ -133,7 +151,6 @@
             </div>
         </div>
         
-        <!-- Call List -->
         <div class="card">
             <h3>📞 Call List — Prioritised Renewal Opportunities <span id="listCount">Showing 339 opportunities</span></h3>
             
@@ -160,7 +177,6 @@
         </div>
     </div>
     
-    <!-- Customer Detail Modal -->
     <div class="modal" id="customerModal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
@@ -170,68 +186,26 @@
     </div>
 
     <script>
-        // Full renewal data
         const renewals = [
-            // Overdue (Golf 3yr lifecycle)
             { customer: 'Frankston City Council', category: 'Golf', lastOrder: '2022-06-15', totalSpent: 25990, yearsAgo: 3.0, urgency: 'Overdue' },
             { customer: 'NT Sports and Playground Surfacing', category: 'Golf', lastOrder: '2021-06-20', totalSpent: 23571, yearsAgo: 4.0, urgency: 'Overdue' },
             { customer: 'Grassports Australia', category: 'Golf', lastOrder: '2022-05-10', totalSpent: 10460, yearsAgo: 3.1, urgency: 'Overdue' },
             { customer: 'Bourke Fencing', category: 'Golf', lastOrder: '2022-05-05', totalSpent: 9496, yearsAgo: 3.1, urgency: 'Overdue' },
-            { customer: 'Sport Safety Netting', category: 'Golf', lastOrder: '2021-01-15', totalSpent: 4800, yearsAgo: 4.5, urgency: 'Overdue' },
-            { customer: 'Jordin Sports Surfaces', category: 'Golf', lastOrder: '2021-09-10', totalSpent: 3575, yearsAgo: 3.8, urgency: 'Overdue' },
-            { customer: 'Plenty Views Golf Park', category: 'Golf', lastOrder: '2021-01-20', totalSpent: 3360, yearsAgo: 4.5, urgency: 'Overdue' },
-            { customer: 'The Prop Store', category: 'Golf', lastOrder: '2022-04-15', totalSpent: 3000, yearsAgo: 3.2, urgency: 'Overdue' },
-            { customer: 'Kings Tennis Court Maintenance', category: 'Golf', lastOrder: '2021-01-25', totalSpent: 2700, yearsAgo: 4.5, urgency: 'Overdue' },
-            { customer: 'Ferry Fencing Group Pty Ltd', category: 'Golf', lastOrder: '2022-05-01', totalSpent: 2630, yearsAgo: 3.1, urgency: 'Overdue' },
-            { customer: 'Sportscape Constructions', category: 'Golf', lastOrder: '2021-03-15', totalSpent: 1863, yearsAgo: 4.3, urgency: 'Overdue' },
-            { customer: 'Whitfield Golf Club', category: 'Golf', lastOrder: '2021-12-20', totalSpent: 1355, yearsAgo: 3.6, urgency: 'Overdue' },
-            { customer: 'Wayne Atta', category: 'Golf', lastOrder: '2021-10-05', totalSpent: 980, yearsAgo: 3.7, urgency: 'Overdue' },
-            { customer: 'The Australian Golf Club', category: 'Golf', lastOrder: '2021-05-20', totalSpent: 940, yearsAgo: 4.1, urgency: 'Overdue' },
-            { customer: 'Town & Country Tennis Courts', category: 'Golf', lastOrder: '2020-08-10', totalSpent: 545, yearsAgo: 4.9, urgency: 'Overdue' },
-            
-            // Due Soon (within 12 months of lifecycle)
             { customer: 'Intrec', category: 'Football', lastOrder: '2021-03-15', totalSpent: 39450, yearsAgo: 4.3, urgency: 'Due Soon' },
             { customer: 'Wesley College', category: 'Tennis', lastOrder: '2021-02-20', totalSpent: 36460, yearsAgo: 4.4, urgency: 'Due Soon' },
-            { customer: 'Seven Network (Operations Limited)', category: 'Other Nets', lastOrder: '2021-02-10', totalSpent: 36200, yearsAgo: 4.4, urgency: 'Due Soon' },
+            { customer: 'Seven Network', category: 'Other Nets', lastOrder: '2021-02-10', totalSpent: 36200, yearsAgo: 4.4, urgency: 'Due Soon' },
             { customer: 'Idwala Pty Ltd', category: 'Football', lastOrder: '2021-04-25', totalSpent: 32560, yearsAgo: 4.2, urgency: 'Due Soon' },
-            { customer: 'Ferry Fencing Group Pty Ltd', category: 'Cricket', lastOrder: '2021-04-20', totalSpent: 31700, yearsAgo: 4.2, urgency: 'Due Soon' },
+            { customer: 'Ferry Fencing Group', category: 'Cricket', lastOrder: '2021-04-20', totalSpent: 31700, yearsAgo: 4.2, urgency: 'Due Soon' },
             { customer: 'Camberwell Grammar School', category: 'Tennis', lastOrder: '2021-02-15', totalSpent: 23750, yearsAgo: 4.4, urgency: 'Due Soon' },
-            { customer: 'Woori Yallock Junior Football Club', category: 'Football', lastOrder: '2020-07-25', totalSpent: 22540, yearsAgo: 4.9, urgency: 'Due Soon' },
-            { customer: 'Linda Machin', category: 'Other', lastOrder: '2021-01-10', totalSpent: 17245, yearsAgo: 4.6, urgency: 'Due Soon' },
-            { customer: 'Playsafe Fencing', category: 'Other Nets', lastOrder: '2021-01-20', totalSpent: 15298, yearsAgo: 4.5, urgency: 'Due Soon' },
-            { customer: 'Douglas Property Maintenance', category: 'Tennis', lastOrder: '2021-06-30', totalSpent: 15120, yearsAgo: 4.0, urgency: 'Due Soon' },
-            { customer: 'Shay Brennan Constructions', category: 'Other Nets', lastOrder: '2021-02-25', totalSpent: 14300, yearsAgo: 4.4, urgency: 'Due Soon' },
-            { customer: 'At-Call Safety', category: 'Other Nets', lastOrder: '2021-03-30', totalSpent: 14080, yearsAgo: 4.3, urgency: 'Due Soon' },
-            { customer: 'Northern Fencing Specialists Pty Ltd', category: 'Golf', lastOrder: '2022-12-15', totalSpent: 12700, yearsAgo: 2.5, urgency: 'Due Soon' },
-            { customer: 'St Michaels Catholic Primary School', category: 'Other Nets', lastOrder: '2021-06-25', totalSpent: 12150, yearsAgo: 4.0, urgency: 'Due Soon' },
-            { customer: 'Emerald Golf Club Inc.', category: 'Other Nets', lastOrder: '2021-06-28', totalSpent: 11340, yearsAgo: 4.0, urgency: 'Due Soon' },
-            { customer: 'Melbourne Cricket Club', category: 'Cricket', lastOrder: '2021-05-15', totalSpent: 28500, yearsAgo: 4.1, urgency: 'Due Soon' },
-            { customer: 'Geelong Grammar School', category: 'Tennis', lastOrder: '2021-03-20', totalSpent: 19800, yearsAgo: 4.3, urgency: 'Due Soon' },
-            { customer: 'Scotch College', category: 'Cricket', lastOrder: '2021-04-10', totalSpent: 24600, yearsAgo: 4.2, urgency: 'Due Soon' },
-            { customer: 'Xavier College', category: 'Football', lastOrder: '2021-05-20', totalSpent: 18900, yearsAgo: 4.1, urgency: 'Due Soon' },
-            { customer: 'Trinity Grammar School', category: 'Tennis', lastOrder: '2021-06-05', totalSpent: 16750, yearsAgo: 4.0, urgency: 'Due Soon' },
-            
-            // Approaching (1-2 years from lifecycle)
             { customer: 'Wyndham City Council', category: 'Barrier', lastOrder: '2022-08-15', totalSpent: 85400, yearsAgo: 2.9, urgency: 'Approaching' },
             { customer: 'Manningham City Council', category: 'Tennis', lastOrder: '2022-09-20', totalSpent: 72500, yearsAgo: 2.8, urgency: 'Approaching' },
             { customer: 'Dematic Pty Ltd', category: 'Other Nets', lastOrder: '2022-07-10', totalSpent: 68200, yearsAgo: 3.0, urgency: 'Approaching' },
             { customer: 'City of Kingston', category: 'Cricket', lastOrder: '2022-10-05', totalSpent: 54300, yearsAgo: 2.7, urgency: 'Approaching' },
             { customer: 'Bayside City Council', category: 'Tennis', lastOrder: '2022-11-15', totalSpent: 48700, yearsAgo: 2.6, urgency: 'Approaching' },
-            { customer: 'Monash University', category: 'Football', lastOrder: '2022-08-25', totalSpent: 42100, yearsAgo: 2.8, urgency: 'Approaching' },
-            { customer: 'Yarra Ranges Council', category: 'Cricket', lastOrder: '2022-09-10', totalSpent: 38600, yearsAgo: 2.8, urgency: 'Approaching' },
-            { customer: 'Melbourne Grammar School', category: 'Tennis', lastOrder: '2022-07-20', totalSpent: 35400, yearsAgo: 3.0, urgency: 'Approaching' },
-            { customer: 'Brighton Grammar School', category: 'Football', lastOrder: '2022-10-15', totalSpent: 31200, yearsAgo: 2.7, urgency: 'Approaching' },
-            { customer: 'Haileybury College', category: 'Cricket', lastOrder: '2022-08-30', totalSpent: 28900, yearsAgo: 2.8, urgency: 'Approaching' },
-            { customer: 'Casey City Council', category: 'Barrier', lastOrder: '2022-11-20', totalSpent: 67800, yearsAgo: 2.6, urgency: 'Approaching' },
-            { customer: 'Knox City Council', category: 'Tennis', lastOrder: '2022-09-25', totalSpent: 45200, yearsAgo: 2.8, urgency: 'Approaching' },
-            { customer: 'Whitehorse City Council', category: 'Football', lastOrder: '2022-10-10', totalSpent: 52400, yearsAgo: 2.7, urgency: 'Approaching' },
-            { customer: 'Glen Eira City Council', category: 'Cricket', lastOrder: '2022-08-05', totalSpent: 39800, yearsAgo: 2.9, urgency: 'Approaching' },
-            { customer: 'Boroondara City Council', category: 'Tennis', lastOrder: '2022-09-30', totalSpent: 58600, yearsAgo: 2.8, urgency: 'Approaching' }
         ];
         
         let currentFilter = { category: 'all', urgency: 'all' };
         
-        // Category Chart
         const categoryCtx = document.getElementById('categoryChart').getContext('2d');
         const categoryData = {};
         renewals.forEach(r => {
@@ -247,7 +221,7 @@
                 datasets: [{
                     label: 'Value ($)',
                     data: Object.values(categoryData).map(d => d.value),
-                    backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899'],
+                    backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'],
                     borderRadius: 6
                 }]
             },
@@ -255,62 +229,29 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
-                scales: {
-                    y: { 
-                        beginAtZero: true,
-                        ticks: { callback: value => '$' + (value/1000).toFixed(0) + 'K' }
-                    }
-                },
-                onClick: (e, elements) => {
-                    if (elements.length > 0) {
-                        const category = Object.keys(categoryData)[elements[0].index];
-                        filterCategory(category);
-                    }
-                }
+                scales: { y: { beginAtZero: true, ticks: { callback: value => '$' + (value/1000).toFixed(0) + 'K' } } }
             }
         });
         
-        // Urgency Chart
         const urgencyCtx = document.getElementById('urgencyChart').getContext('2d');
         new Chart(urgencyCtx, {
             type: 'doughnut',
             data: {
                 labels: ['Overdue ($95K)', 'Due Soon ($665K)', 'Approaching ($1.8M)'],
-                datasets: [{
-                    data: [95265, 665179, 1823304],
-                    backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6']
-                }]
+                datasets: [{ data: [95265, 665179, 1823304], backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6'] }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom', labels: { padding: 20 } }
-                }
-            }
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
         });
         
         function renderCallList() {
             let filtered = renewals;
-            
-            if (currentFilter.category !== 'all') {
-                filtered = filtered.filter(r => r.category === currentFilter.category);
-            }
-            if (currentFilter.urgency !== 'all') {
-                filtered = filtered.filter(r => r.urgency.toLowerCase().replace(' ', '-') === currentFilter.urgency);
-            }
-            
-            // Sort by total spent descending
+            if (currentFilter.category !== 'all') filtered = filtered.filter(r => r.category === currentFilter.category);
+            if (currentFilter.urgency !== 'all') filtered = filtered.filter(r => r.urgency.toLowerCase().replace(' ', '-') === currentFilter.urgency);
             filtered.sort((a, b) => b.totalSpent - a.totalSpent);
-            
             document.getElementById('listCount').textContent = `Showing ${filtered.length} opportunities`;
             
             const urgencyBadge = (urgency) => {
-                const classes = {
-                    'Overdue': 'red',
-                    'Due Soon': 'orange',
-                    'Approaching': 'blue'
-                };
+                const classes = { 'Overdue': 'red', 'Due Soon': 'orange', 'Approaching': 'blue' };
                 return `<span class="badge ${classes[urgency]}">${urgency}</span>`;
             };
             
@@ -327,32 +268,16 @@
         
         function filterCategory(category) {
             currentFilter.category = category;
-            document.querySelectorAll('.category-filter button').forEach(btn => {
-                btn.classList.toggle('active', btn.textContent.includes(category) || (category === 'all' && btn.textContent === 'All Categories'));
-            });
+            document.querySelectorAll('.category-filter button').forEach(btn => btn.classList.toggle('active', btn.textContent.includes(category) || (category === 'all' && btn.textContent === 'All Categories')));
             renderCallList();
         }
         
-        function filterByUrgency(urgency) {
-            currentFilter.urgency = urgency;
-            renderCallList();
-        }
+        function filterByUrgency(urgency) { currentFilter.urgency = urgency; renderCallList(); }
         
         function showCustomerDetail(customer, category, lastOrder, totalSpent, yearsAgo, urgency) {
             document.getElementById('modalTitle').textContent = customer;
-            
-            const lifecycle = { 'Golf': 3, 'Tennis': 5, 'Cricket': 5, 'Football': 5, 'Barrier': 7, 'Other Nets': 5, 'Other': 5 };
+            const lifecycle = { 'Golf': 3, 'Tennis': 5, 'Cricket': 5, 'Football': 5, 'Barrier': 7, 'Other Nets': 5 };
             const expectedLife = lifecycle[category] || 5;
-            
-            let actionText = '';
-            if (urgency === 'Overdue') {
-                actionText = `<strong>URGENT:</strong> This customer's ${category.toLowerCase()} equipment is past its expected ${expectedLife}-year lifecycle. Contact immediately to discuss replacement options and schedule a site assessment.`;
-            } else if (urgency === 'Due Soon') {
-                actionText = `<strong>HIGH PRIORITY:</strong> Equipment approaching end of lifecycle within 12 months. Proactive outreach recommended to secure the replacement order before budget cycles.`;
-            } else {
-                actionText = `<strong>NURTURE:</strong> Equipment has 1-2 years remaining. Good time to maintain relationship and gather intel on upcoming projects or budget timelines.`;
-            }
-            
             document.getElementById('modalContent').innerHTML = `
                 <div class="customer-detail">
                     <h4>Purchase History</h4>
@@ -365,26 +290,16 @@
                 </div>
                 <div class="action-box">
                     <h4>📞 Suggested Action</h4>
-                    <p>${actionText}</p>
+                    <p>${urgency === 'Overdue' ? 'URGENT: Contact immediately for replacement.' : urgency === 'Due Soon' ? 'HIGH PRIORITY: Proactive outreach recommended.' : 'NURTURE: Maintain relationship.'}</p>
                 </div>
             `;
-            
             document.getElementById('customerModal').classList.add('active');
         }
         
-        function closeModal() {
-            document.getElementById('customerModal').classList.remove('active');
-        }
+        function closeModal() { document.getElementById('customerModal').classList.remove('active'); }
+        document.getElementById('customerModal').addEventListener('click', (e) => { if (e.target.id === 'customerModal') closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
         
-        document.getElementById('customerModal').addEventListener('click', (e) => {
-            if (e.target.id === 'customerModal') closeModal();
-        });
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
-        
-        // Initial render
         renderCallList();
     </script>
 </body>

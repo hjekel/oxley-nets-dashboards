@@ -9,8 +9,11 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; color: #1e293b; }
         .header { background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); color: white; padding: 20px 40px; }
+        .header-content { display: flex; justify-content: space-between; align-items: flex-start; }
+        .header-left { flex: 1; }
         .header h1 { font-size: 28px; font-weight: 600; }
         .header p { opacity: 0.8; margin-top: 5px; }
+        .header-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-left: 20px; }
         .nav-links { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
         .nav-links a { background: rgba(255,255,255,0.15); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 13px; }
         .nav-links a:hover { background: rgba(255,255,255,0.25); }
@@ -27,8 +30,7 @@
         .kpi-value { font-size: 28px; font-weight: 700; margin: 5px 0; }
         .kpi-sub { font-size: 12px; color: #64748b; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px; margin-bottom: 25px; }
-        @media (max-width: 1024px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+        @media (max-width: 1024px) { .grid-2 { grid-template-columns: 1fr; } .header { padding: 15px 20px; } .header h1 { font-size: 22px; } .header-logo { width: 50px; height: 50px; } .container { padding: 15px; } }
         .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .card h3 { font-size: 16px; color: #1e293b; margin-bottom: 20px; }
         .chart-container { position: relative; height: 300px; }
@@ -41,22 +43,23 @@
         .badge.red { background: #fee2e2; color: #dc2626; }
         .trend-up { color: #10b981; }
         .trend-down { color: #ef4444; }
-        .category-card { padding: 15px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .category-card .name { font-weight: 600; }
-        .category-card .value { font-size: 18px; font-weight: 700; }
-        .category-card .trend { font-size: 12px; }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>📊 Product Performance</h1>
-        <p>Product sales, trends, and category analysis</p>
+        <div class="header-content">
+            <div class="header-left">
+                <h1>📊 Oxley Nets</h1>
+                <p>Product Performance — Sales trends by product and category</p>
+            </div>
+            <img src="https://hjekel.github.io/oxley-nets-dashboards/oxley-logo.png" alt="Oxley Nets" class="header-logo" onerror="this.style.display='none'">
+        </div>
         <div class="nav-links">
             <a href="Dashboard_Executive.html">Executive Overview</a>
             <a href="Dashboard_Renewals.html">Renewal Opportunities</a>
             <a href="Dashboard_Quotes.html">Quote Pipeline</a>
             <a href="Dashboard_Customers.html">Customer Health</a>
-            <a href="#" class="active">Product Performance</a>
+            <a href="Dashboard_Products.html" class="active">Product Performance</a>
             <a href="Dashboard_Seasonality.html">Seasonality & Forecast</a>
         </div>
     </div>
@@ -67,18 +70,10 @@
             <div class="kpi-card purple"><div class="kpi-label">Growing Fast</div><div class="kpi-value">Golf</div><div class="kpi-sub">+104% YoY</div></div>
             <div class="kpi-card red"><div class="kpi-label">Declining</div><div class="kpi-value">Barrier</div><div class="kpi-sub">-24% YoY</div></div>
         </div>
-        
         <div class="grid-2">
-            <div class="card">
-                <h3>Revenue by Category</h3>
-                <div class="chart-container"><canvas id="categoryChart"></canvas></div>
-            </div>
-            <div class="card">
-                <h3>Category Trends (2023 vs 2024)</h3>
-                <div class="chart-container"><canvas id="trendChart"></canvas></div>
-            </div>
+            <div class="card"><h3>Revenue by Category</h3><div class="chart-container"><canvas id="categoryChart"></canvas></div></div>
+            <div class="card"><h3>Category Trends (2023 vs 2024)</h3><div class="chart-container"><canvas id="trendChart"></canvas></div></div>
         </div>
-        
         <div class="grid-2">
             <div class="card">
                 <h3>🔥 Top 15 Products by Revenue</h3>
@@ -95,11 +90,6 @@
                         <tr><td>Barrier</td><td>$531,892</td><td><span class="trend-down">-56%</span></td></tr>
                         <tr><td>036S</td><td>$512,368</td><td><span class="trend-down">-50%</span></td></tr>
                         <tr><td>Barrier Net 36</td><td>$311,075</td><td><span class="trend-down">-14%</span></td></tr>
-                        <tr><td>Roof Net</td><td>$308,630</td><td><span class="trend-up">+3%</span></td></tr>
-                        <tr><td>42263DW</td><td>$305,555</td><td><span class="trend-down">-40%</span></td></tr>
-                        <tr><td>Tennis Curtain</td><td>$269,342</td><td><span class="trend-down">-59%</span></td></tr>
-                        <tr><td>Variation</td><td>$250,911</td><td><span class="trend-down">-19%</span></td></tr>
-                        <tr><td>Trolley Net</td><td>$241,740</td><td><span class="trend-up">+100%</span></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -116,13 +106,10 @@
                         <tr><td>Repairs & Maintenance</td><td>$4,875</td><td>$23,251</td><td><span class="badge green">+377%</span></td></tr>
                         <tr><td>Hockey Nets</td><td>$2,635</td><td>$11,965</td><td><span class="badge green">+354%</span></td></tr>
                         <tr><td>Golf Barrier Net</td><td>$104,547</td><td>$293,962</td><td><span class="badge green">+181%</span></td></tr>
-                        <tr><td>Barrier 96ply Nylon</td><td>$23,801</td><td>$62,947</td><td><span class="badge green">+164%</span></td></tr>
-                        <tr><td>Trolley Net</td><td>$60,435</td><td>$120,870</td><td><span class="badge green">+100%</span></td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        
         <div class="card">
             <h3>⚠️ Declining Products (Requires Attention)</h3>
             <table>
@@ -130,9 +117,6 @@
                 <tbody>
                     <tr><td>Tennis Curt Nylon</td><td>$19,115</td><td>$0</td><td><span class="badge red">-100%</span></td><td>Discontinued?</td></tr>
                     <tr><td>Conveyor Nets</td><td>$46,905</td><td>$0</td><td><span class="badge red">-100%</span></td><td>Market shift?</td></tr>
-                    <tr><td>Train Door Net</td><td>$16,022</td><td>$0</td><td><span class="badge red">-100%</span></td><td>Contract ended?</td></tr>
-                    <tr><td>Scramble - Industrial</td><td>$10,310</td><td>$1,640</td><td><span class="badge red">-84%</span></td><td>Review pricing</td></tr>
-                    <tr><td>SOC-A500</td><td>$32,637</td><td>$5,969</td><td><span class="badge red">-82%</span></td><td>Competition?</td></tr>
                     <tr><td>Barrier Sport</td><td>$555,332</td><td>$203,404</td><td><span class="badge red">-63%</span></td><td>Major decline</td></tr>
                     <tr><td>Tennis Curtain</td><td>$56,910</td><td>$23,449</td><td><span class="badge red">-59%</span></td><td>Seasonal?</td></tr>
                     <tr><td>Barrier</td><td>$142,500</td><td>$62,700</td><td><span class="badge red">-56%</span></td><td>Review</td></tr>
@@ -143,21 +127,12 @@
     <script>
         new Chart(document.getElementById('categoryChart'), {
             type: 'bar',
-            data: {
-                labels: ['Barrier', 'Other Nets', 'Football', 'Tennis', 'Cricket', 'Other', 'Golf', 'Hockey'],
-                datasets: [{ data: [4370552, 4224319, 2531073, 2407689, 2036655, 1525203, 1029229, 130951], backgroundColor: ['#1e3a5f', '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899'], borderRadius: 6 }]
-            },
+            data: { labels: ['Barrier', 'Other Nets', 'Football', 'Tennis', 'Cricket', 'Other', 'Golf', 'Hockey'], datasets: [{ data: [4370552, 4224319, 2531073, 2407689, 2036655, 1525203, 1029229, 130951], backgroundColor: ['#1e3a5f', '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899'], borderRadius: 6 }] },
             options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => '$' + (v/1000000).toFixed(1) + 'M' } } } }
         });
         new Chart(document.getElementById('trendChart'), {
             type: 'bar',
-            data: {
-                labels: ['Barrier', 'Tennis', 'Cricket', 'Football', 'Golf', 'Other Nets', 'Hockey'],
-                datasets: [
-                    { label: '2023', data: [1214921, 475018, 446835, 446478, 186541, 829391, 2635], backgroundColor: '#94a3b8' },
-                    { label: '2024', data: [920146, 373539, 387185, 587915, 381436, 882355, 11965], backgroundColor: '#3b82f6' }
-                ]
-            },
+            data: { labels: ['Barrier', 'Tennis', 'Cricket', 'Football', 'Golf', 'Other Nets', 'Hockey'], datasets: [{ label: '2023', data: [1214921, 475018, 446835, 446478, 186541, 829391, 2635], backgroundColor: '#94a3b8' }, { label: '2024', data: [920146, 373539, 387185, 587915, 381436, 882355, 11965], backgroundColor: '#3b82f6' }] },
             options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K' } } } }
         });
     </script>

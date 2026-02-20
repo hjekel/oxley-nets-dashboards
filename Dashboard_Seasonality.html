@@ -9,8 +9,11 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; color: #1e293b; }
         .header { background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); color: white; padding: 20px 40px; }
+        .header-content { display: flex; justify-content: space-between; align-items: flex-start; }
+        .header-left { flex: 1; }
         .header h1 { font-size: 28px; font-weight: 600; }
         .header p { opacity: 0.8; margin-top: 5px; }
+        .header-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-left: 20px; }
         .nav-links { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
         .nav-links a { background: rgba(255,255,255,0.15); color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 13px; }
         .nav-links a:hover { background: rgba(255,255,255,0.25); }
@@ -27,7 +30,7 @@
         .kpi-value { font-size: 28px; font-weight: 700; margin: 8px 0; }
         .kpi-sub { font-size: 13px; color: #64748b; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
-        @media (max-width: 1024px) { .grid-2 { grid-template-columns: 1fr; } }
+        @media (max-width: 1024px) { .grid-2 { grid-template-columns: 1fr; } .header { padding: 15px 20px; } .header h1 { font-size: 22px; } .header-logo { width: 50px; height: 50px; } .container { padding: 15px; } }
         .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .card h3 { font-size: 16px; color: #1e293b; margin-bottom: 20px; }
         .chart-container { position: relative; height: 350px; }
@@ -46,15 +49,20 @@
 </head>
 <body>
     <div class="header">
-        <h1>📅 Seasonality & Forecast</h1>
-        <p>Monthly patterns and revenue predictions</p>
+        <div class="header-content">
+            <div class="header-left">
+                <h1>📅 Oxley Nets</h1>
+                <p>Seasonality & Forecast — Monthly patterns and revenue predictions</p>
+            </div>
+            <img src="https://hjekel.github.io/oxley-nets-dashboards/oxley-logo.png" alt="Oxley Nets" class="header-logo" onerror="this.style.display='none'">
+        </div>
         <div class="nav-links">
             <a href="Dashboard_Executive.html">Executive Overview</a>
             <a href="Dashboard_Renewals.html">Renewal Opportunities</a>
             <a href="Dashboard_Quotes.html">Quote Pipeline</a>
             <a href="Dashboard_Customers.html">Customer Health</a>
             <a href="Dashboard_Products.html">Product Performance</a>
-            <a href="#" class="active">Seasonality & Forecast</a>
+            <a href="Dashboard_Seasonality.html" class="active">Seasonality & Forecast</a>
         </div>
     </div>
     <div class="container">
@@ -64,17 +72,9 @@
             <div class="kpi-card blue"><div class="kpi-label">YTD 2025</div><div class="kpi-value">$1.52M</div><div class="kpi-sub">Jan-Jun 2025</div></div>
             <div class="kpi-card purple"><div class="kpi-label">Avg Monthly</div><div class="kpi-value">$304K</div><div class="kpi-sub">5-year average</div></div>
         </div>
-        
-        <div class="card" style="margin-bottom: 25px;">
-            <h3>Monthly Revenue Pattern (5-Year Average)</h3>
-            <div class="chart-container"><canvas id="seasonalChart"></canvas></div>
-        </div>
-        
+        <div class="card" style="margin-bottom: 25px;"><h3>Monthly Revenue Pattern (5-Year Average)</h3><div class="chart-container"><canvas id="seasonalChart"></canvas></div></div>
         <div class="grid-2">
-            <div class="card">
-                <h3>Year-over-Year Comparison</h3>
-                <div class="chart-container"><canvas id="yoyChart"></canvas></div>
-            </div>
+            <div class="card"><h3>Year-over-Year Comparison</h3><div class="chart-container"><canvas id="yoyChart"></canvas></div></div>
             <div class="card">
                 <h3>Monthly Breakdown</h3>
                 <table class="month-table">
@@ -96,16 +96,14 @@
                 </table>
             </div>
         </div>
-        
         <div class="card">
             <h3>💡 Seasonal Insights & Planning Recommendations</h3>
             <div class="insight-box">
                 <h4>Key Seasonal Patterns</h4>
                 <ul>
-                    <li><strong>Peak periods: June & December</strong> — End of financial year (June) drives budget spending; December sees pre-season installations</li>
+                    <li><strong>Peak periods: June & December</strong> — End of financial year (June) drives budget spending</li>
                     <li><strong>March is also high</strong> — Schools and councils complete projects before Easter break</li>
                     <li><strong>January is lowest</strong> — Summer holidays, reduced construction activity</li>
-                    <li><strong>Q4 (Oct-Dec) strong</strong> — Pre-summer sports season prep drives demand</li>
                 </ul>
             </div>
             <div class="insight-box" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-left-color: #10b981; margin-top: 15px;">
@@ -114,19 +112,13 @@
                     <li><strong>May-June:</strong> Intensify outreach to councils and schools — EOFY budget deadlines</li>
                     <li><strong>September-October:</strong> Target sports clubs for summer season prep</li>
                     <li><strong>November:</strong> Push for installations before Christmas shutdown</li>
-                    <li><strong>January-February:</strong> Focus on quotes and pipeline building for March surge</li>
-                    <li><strong>Stock planning:</strong> Build inventory in April-May for June peak; October for December</li>
                 </ul>
             </div>
             <div class="insight-box" style="background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border-left-color: #eab308; margin-top: 15px;">
                 <h4>Forecast: July - December 2025</h4>
                 <ul>
-                    <li><strong>July 2025:</strong> ~$260K (typical post-EOFY slowdown)</li>
-                    <li><strong>August 2025:</strong> ~$270K (steady)</li>
-                    <li><strong>September 2025:</strong> ~$300K (pre-season buildup)</li>
-                    <li><strong>October 2025:</strong> ~$300K (continued momentum)</li>
-                    <li><strong>November 2025:</strong> ~$300K (strong finish push)</li>
-                    <li><strong>December 2025:</strong> ~$375K (year-end peak)</li>
+                    <li><strong>July 2025:</strong> ~$260K | <strong>August 2025:</strong> ~$270K | <strong>September 2025:</strong> ~$300K</li>
+                    <li><strong>October 2025:</strong> ~$300K | <strong>November 2025:</strong> ~$300K | <strong>December 2025:</strong> ~$375K</li>
                     <li><strong>H2 2025 Total Forecast:</strong> ~$1.8M</li>
                 </ul>
             </div>
@@ -135,46 +127,20 @@
     <script>
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const avgData = [246094, 271754, 357564, 256423, 292753, 419275, 262280, 269767, 298091, 299966, 299776, 377392];
-        
         new Chart(document.getElementById('seasonalChart'), {
             type: 'line',
-            data: {
-                labels: months,
-                datasets: [{
-                    label: '5-Year Average',
-                    data: avgData,
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    fill: true,
-                    tension: 0.3,
-                    pointRadius: 6,
-                    pointBackgroundColor: avgData.map(v => v > 350000 ? '#10b981' : v < 260000 ? '#f59e0b' : '#3b82f6')
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: false, ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K' } } }
-            }
+            data: { labels: months, datasets: [{ label: '5-Year Average', data: avgData, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true, tension: 0.3, pointRadius: 6, pointBackgroundColor: avgData.map(v => v > 350000 ? '#10b981' : v < 260000 ? '#f59e0b' : '#3b82f6') }] },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: false, ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K' } } } }
         });
-        
         new Chart(document.getElementById('yoyChart'), {
             type: 'line',
-            data: {
-                labels: months,
-                datasets: [
-                    { label: '2022', data: [245000, 312000, 385000, 298000, 315000, 445000, 285000, 305000, 342000, 356000, 318000, 360000], borderColor: '#94a3b8', tension: 0.3, pointRadius: 3 },
-                    { label: '2023', data: [238000, 295000, 378000, 286000, 308000, 428000, 276000, 298000, 325000, 342000, 312000, 402000], borderColor: '#8b5cf6', tension: 0.3, pointRadius: 3 },
-                    { label: '2024', data: [252000, 285000, 345000, 268000, 295000, 395000, 258000, 275000, 312000, 328000, 305000, 365000], borderColor: '#3b82f6', tension: 0.3, pointRadius: 3 },
-                    { label: '2025', data: [248000, 278000, 362000, 275000, 310000, 447000, null, null, null, null, null, null], borderColor: '#10b981', tension: 0.3, pointRadius: 5, borderWidth: 3 }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: { y: { ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K' } } }
-            }
+            data: { labels: months, datasets: [
+                { label: '2022', data: [245000, 312000, 385000, 298000, 315000, 445000, 285000, 305000, 342000, 356000, 318000, 360000], borderColor: '#94a3b8', tension: 0.3, pointRadius: 3 },
+                { label: '2023', data: [238000, 295000, 378000, 286000, 308000, 428000, 276000, 298000, 325000, 342000, 312000, 402000], borderColor: '#8b5cf6', tension: 0.3, pointRadius: 3 },
+                { label: '2024', data: [252000, 285000, 345000, 268000, 295000, 395000, 258000, 275000, 312000, 328000, 305000, 365000], borderColor: '#3b82f6', tension: 0.3, pointRadius: 3 },
+                { label: '2025', data: [248000, 278000, 362000, 275000, 310000, 447000, null, null, null, null, null, null], borderColor: '#10b981', tension: 0.3, pointRadius: 5, borderWidth: 3 }
+            ] },
+            options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K' } } } }
         });
     </script>
 </body>
