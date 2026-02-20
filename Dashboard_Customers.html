@@ -34,24 +34,28 @@
         .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .card h3 { font-size: 16px; color: #1e293b; margin-bottom: 20px; }
         .chart-container { position: relative; height: 300px; }
-        .segment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        @media (max-width: 768px) { .segment-grid { grid-template-columns: 1fr; } }
+        .segment-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+        @media (max-width: 900px) { .segment-grid { grid-template-columns: repeat(2, 1fr); } }
         .segment-card { padding: 20px; border-radius: 8px; text-align: center; }
         .segment-card.a { background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border: 2px solid #10b981; }
-        .segment-card.b { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; }
-        .segment-card.c { background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border: 2px solid #ef4444; }
+        .segment-card.b { background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border: 2px solid #3b82f6; }
+        .segment-card.c { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; }
+        .segment-card.d { background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border: 2px solid #ef4444; }
         .segment-card h4 { font-size: 14px; color: #374151; margin-bottom: 10px; }
         .segment-card .count { font-size: 36px; font-weight: 700; }
         .segment-card.a .count { color: #059669; }
-        .segment-card.b .count { color: #d97706; }
-        .segment-card.c .count { color: #dc2626; }
-        .segment-card .detail { font-size: 12px; color: #6b7280; margin-top: 5px; }
+        .segment-card.b .count { color: #2563eb; }
+        .segment-card.c .count { color: #d97706; }
+        .segment-card.d .count { color: #dc2626; }
+        .segment-card .detail { font-size: 11px; color: #6b7280; margin-top: 5px; }
         table { width: 100%; border-collapse: collapse; font-size: 13px; }
         th { text-align: left; padding: 12px; background: #f1f5f9; color: #475569; font-weight: 600; font-size: 11px; text-transform: uppercase; }
         td { padding: 12px; border-bottom: 1px solid #e2e8f0; }
         tr:hover { background: #f8fafc; }
         .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
         .badge.green { background: #d1fae5; color: #059669; }
+        .badge.blue { background: #dbeafe; color: #2563eb; }
+        .badge.orange { background: #ffedd5; color: #ea580c; }
         .badge.red { background: #fee2e2; color: #dc2626; }
         .churn-alert { background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-left: 4px solid #ef4444; padding: 20px; border-radius: 0 8px 8px 0; margin-bottom: 25px; }
         .churn-alert h4 { color: #991b1b; margin-bottom: 10px; }
@@ -63,9 +67,9 @@
         <div class="header-content">
             <div class="header-left">
                 <h1>👥 Oxley Nets</h1>
-                <p>Customer Health — Segmentation, retention, and churn risk analysis</p>
+                <p>Customer Health — ABCD Segmentation, retention, and churn risk analysis</p>
             </div>
-            <img src="https://hjekel.github.io/oxley-nets-dashboards/oxley-logo.png" alt="Oxley Nets" class="header-logo" onerror="this.style.display='none'">
+            <img src="oxley-logo.png" alt="Oxley Nets" class="header-logo" onerror="this.style.display='none'">
         </div>
         <div class="nav-links">
             <a href="Dashboard_Executive.html">Executive Overview</a>
@@ -85,22 +89,29 @@
             <p>Customers with $6.1M in historical revenue haven't ordered in 12+ months. Immediate re-engagement recommended.</p>
         </div>
         <div class="kpi-grid">
-            <div class="kpi-card green"><div class="kpi-label">Total Customers</div><div class="kpi-value">1,287</div><div class="kpi-sub">Since July 2020</div></div>
-            <div class="kpi-card blue"><div class="kpi-label">Active (Last 12mo)</div><div class="kpi-value">487</div><div class="kpi-sub">38% of total base</div></div>
+            <div class="kpi-card green"><div class="kpi-label">Total Customers</div><div class="kpi-value">1,876</div><div class="kpi-sub">Since July 2014</div></div>
+            <div class="kpi-card blue"><div class="kpi-label">Active (Last 12mo)</div><div class="kpi-value">487</div><div class="kpi-sub">26% of total base</div></div>
             <div class="kpi-card orange"><div class="kpi-label">At Risk</div><div class="kpi-value">236</div><div class="kpi-sub">12+ months dormant</div></div>
             <div class="kpi-card red"><div class="kpi-label">At Risk Revenue</div><div class="kpi-value">$6.1M</div><div class="kpi-sub">Historical value at risk</div></div>
         </div>
         <div class="card" style="margin-bottom: 25px;">
-            <h3>Customer Segmentation (ABC Analysis)</h3>
+            <h3>Customer Segmentation (ABCD Analysis)</h3>
             <div class="segment-grid">
-                <div class="segment-card a"><h4>A-Tier Customers</h4><div class="count">220</div><div class="detail">80% of revenue | 17% of customers</div></div>
-                <div class="segment-card b"><h4>B-Tier Customers</h4><div class="count">324</div><div class="detail">15% of revenue | 25% of customers</div></div>
-                <div class="segment-card c"><h4>C-Tier Customers</h4><div class="count">743</div><div class="detail">5% of revenue | 58% of customers</div></div>
+                <div class="segment-card a"><h4>A-Tier Customers</h4><div class="count">18</div><div class="detail">Top 1% | $9.5M revenue<br>Avg: $527K per customer</div></div>
+                <div class="segment-card b"><h4>B-Tier Customers</h4><div class="count">75</div><div class="detail">Next 4% | $9.4M revenue<br>Avg: $125K per customer</div></div>
+                <div class="segment-card c"><h4>C-Tier Customers</h4><div class="count">282</div><div class="detail">Next 15% | $9.4M revenue<br>Avg: $33K per customer</div></div>
+                <div class="segment-card d"><h4>D-Tier Customers</h4><div class="count">1,501</div><div class="detail">Bottom 80% | $4.8M revenue<br>Avg: $3.2K per customer</div></div>
             </div>
         </div>
         <div class="grid-2">
-            <div class="card"><h3>New vs Returning Customers by Year</h3><div class="chart-container"><canvas id="newReturningChart"></canvas></div></div>
-            <div class="card"><h3>Revenue by Customer Segment</h3><div class="chart-container"><canvas id="segmentChart"></canvas></div></div>
+            <div class="card">
+                <h3>📊 New vs Returning Customers by Year</h3>
+                <div class="chart-container"><canvas id="newReturningChart"></canvas></div>
+            </div>
+            <div class="card">
+                <h3>🎯 Revenue by Customer Segment</h3>
+                <div class="chart-container"><canvas id="segmentChart"></canvas></div>
+            </div>
         </div>
         <div class="grid-2">
             <div class="card">
@@ -108,16 +119,21 @@
                 <table>
                     <thead><tr><th>Customer</th><th>Revenue</th><th>Orders</th><th>Segment</th></tr></thead>
                     <tbody>
-                        <tr><td>Cash Sale Vic</td><td>$535,678</td><td>1,042</td><td><span class="badge green">A</span></td></tr>
-                        <tr><td>Wyndham City Council</td><td>$464,622</td><td>40</td><td><span class="badge green">A</span></td></tr>
-                        <tr><td>Turf One</td><td>$445,616</td><td>54</td><td><span class="badge green">A</span></td></tr>
-                        <tr><td>Dematic Pty Ltd</td><td>$381,612</td><td>17</td><td><span class="badge green">A</span></td></tr>
-                        <tr><td>Manningham City Council</td><td>$364,978</td><td>44</td><td><span class="badge green">A</span></td></tr>
-                        <tr><td>David Golf & Engineering</td><td>$353,812</td><td>194</td><td><span class="badge green">A</span></td></tr>
-                        <tr><td>A. Glen Tennis & Rec</td><td>$340,399</td><td>24</td><td><span class="badge green">A</span></td></tr>
-                        <tr><td>Abel Sports</td><td>$294,815</td><td>194</td><td><span class="badge green">A</span></td></tr>
-                        <tr><td>Country Club International</td><td>$287,412</td><td>93</td><td><span class="badge green">A</span></td></tr>
-                        <tr><td>AS Lodge Tennis Courts</td><td>$231,782</td><td>161</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>Cash Sale Tas</td><td>$1,433,742</td><td>3,396</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>Wyndham City Council</td><td>$766,374</td><td>80</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>Dematic Pty Ltd</td><td>$753,647</td><td>27</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>Abel Sports</td><td>$737,341</td><td>464</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>City of Karratha</td><td>$599,231</td><td>61</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>Casey Scorpions</td><td>$563,542</td><td>1,398</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>David Golf & Engineering</td><td>$542,858</td><td>328</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>Artillion Pty Ltd</td><td>$541,783</td><td>403</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>Turf One</td><td>$526,916</td><td>88</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>Manner Landscapes</td><td>$469,420</td><td>72</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>A Star Sports Industries</td><td>$460,605</td><td>137</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>Corrective Services NSW</td><td>$391,978</td><td>98</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>Grassports Australia</td><td>$318,446</td><td>90</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>Tennis SA</td><td>$305,936</td><td>1,210</td><td><span class="badge green">A</span></td></tr>
+                        <tr><td>Multiplex Construction</td><td>$281,067</td><td>111</td><td><span class="badge green">A</span></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -126,16 +142,16 @@
                 <table>
                     <thead><tr><th>Customer</th><th>Revenue</th><th>Last Order</th><th>Days</th></tr></thead>
                     <tbody>
-                        <tr><td>A. Glen Tennis & Rec</td><td>$340,399</td><td>2023-02-27</td><td><span class="badge red">854</span></td></tr>
-                        <tr><td>TMA Australia Pty Ltd</td><td>$192,240</td><td>2024-05-16</td><td><span class="badge red">410</span></td></tr>
-                        <tr><td>Landscape Solutions</td><td>$156,800</td><td>2024-03-10</td><td><span class="badge red">477</span></td></tr>
-                        <tr><td>Peninsula Sports</td><td>$142,500</td><td>2024-01-22</td><td><span class="badge red">525</span></td></tr>
-                        <tr><td>Metro Sports Surfaces</td><td>$128,900</td><td>2023-11-15</td><td><span class="badge red">593</span></td></tr>
-                        <tr><td>Eastern Recreation</td><td>$115,200</td><td>2024-04-08</td><td><span class="badge red">448</span></td></tr>
-                        <tr><td>Southern Tennis Courts</td><td>$98,700</td><td>2023-09-20</td><td><span class="badge red">649</span></td></tr>
-                        <tr><td>Western Districts FC</td><td>$87,400</td><td>2024-02-14</td><td><span class="badge red">501</span></td></tr>
-                        <tr><td>Geelong Sports Club</td><td>$76,200</td><td>2024-05-30</td><td><span class="badge red">396</span></td></tr>
-                        <tr><td>Bayside Cricket Club</td><td>$68,900</td><td>2023-12-05</td><td><span class="badge red">573</span></td></tr>
+                        <tr><td>A. Glen Tennis & Rec</td><td>$340,399</td><td>2023-02-27</td><td><span class="badge red">730</span></td></tr>
+                        <tr><td>Grassports Australia</td><td>$318,446</td><td>2023-05-15</td><td><span class="badge red">645</span></td></tr>
+                        <tr><td>Multiplex Construction</td><td>$281,067</td><td>2022-08-10</td><td><span class="badge red">924</span></td></tr>
+                        <tr><td>WATPAC Construction</td><td>$274,546</td><td>2022-11-22</td><td><span class="badge red">820</span></td></tr>
+                        <tr><td>A Star Sports Industries</td><td>$460,605</td><td>2023-04-18</td><td><span class="badge red">673</span></td></tr>
+                        <tr><td>Diamond Creek Baseball</td><td>$236,939</td><td>2024-03-12</td><td><span class="badge orange">345</span></td></tr>
+                        <tr><td>City of Greater Bendigo</td><td>$218,361</td><td>2022-06-30</td><td><span class="badge red">965</span></td></tr>
+                        <tr><td>Polytan</td><td>$192,869</td><td>2024-01-15</td><td><span class="badge orange">401</span></td></tr>
+                        <tr><td>Knox City Council</td><td>$183,143</td><td>2024-02-28</td><td><span class="badge orange">358</span></td></tr>
+                        <tr><td>Brunker Fabrications</td><td>$163,788</td><td>2024-01-05</td><td><span class="badge orange">411</span></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -144,13 +160,23 @@
     <script>
         new Chart(document.getElementById('newReturningChart'), {
             type: 'bar',
-            data: { labels: ['2020', '2021', '2022', '2023', '2024', '2025 YTD'], datasets: [{ label: 'New', data: [238, 292, 240, 229, 190, 98], backgroundColor: '#3b82f6' }, { label: 'Returning', data: [0, 132, 224, 274, 264, 186], backgroundColor: '#10b981' }] },
+            data: {
+                labels: ['2020', '2021', '2022', '2023', '2024', '2025 YTD'],
+                datasets: [
+                    { label: 'New', data: [210, 285, 312, 298, 275, 145], backgroundColor: '#3b82f6' },
+                    { label: 'Returning', data: [320, 385, 420, 445, 410, 280], backgroundColor: '#10b981' }
+                ]
+            },
             options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true } } }
         });
+        
         new Chart(document.getElementById('segmentChart'), {
             type: 'doughnut',
-            data: { labels: ['A-Tier (80%)', 'B-Tier (15%)', 'C-Tier (5%)'], datasets: [{ data: [14604538, 2738351, 912783], backgroundColor: ['#10b981', '#f59e0b', '#ef4444'] }] },
-            options: { responsive: true, maintainAspectRatio: false }
+            data: {
+                labels: ['A-Tier (29%)', 'B-Tier (28%)', 'C-Tier (28%)', 'D-Tier (15%)'],
+                datasets: [{ data: [9481406, 9409324, 9436306, 4793773], backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444'] }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
         });
     </script>
 </body>

@@ -185,7 +185,7 @@
         
         <div class="grid-3">
             <div class="card">
-                <h3>Top 10 Customers <span>All time</span></h3>
+                <h3>Top 10 Customers <span>All time — Click for details</span></h3>
                 <table>
                     <thead><tr><th>Customer</th><th>Revenue</th></tr></thead>
                     <tbody id="topCustomers"></tbody>
@@ -293,6 +293,15 @@
             <a href="Dashboard_Quotes.html" style="display:block; text-align:center; margin-top:20px; color:#1e3a5f;">View Full Quote Dashboard →</a>
         </div>
     </div>
+    
+    <!-- Customer Detail Modal -->
+    <div class="modal" id="customerModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('customer')">&times;</span>
+            <h2 id="customerModalTitle">Customer Details</h2>
+            <div id="customerModalContent"></div>
+        </div>
+    </div>
 
     <script>
         // Revenue Chart - Updated with 2026 data
@@ -341,22 +350,44 @@
             }
         });
         
-        // Populate Top Customers
+        // Populate Top Customers with detailed data
         const topCustomers = [
-            { name: 'Cash Sale Vic', revenue: 580000 },
-            { name: 'Wyndham City Council', revenue: 520000 },
-            { name: 'Turf One', revenue: 490000 },
-            { name: 'Dematic Pty Ltd', revenue: 420000 },
-            { name: 'Manningham City Council', revenue: 400000 },
-            { name: 'David Golf & Engineering', revenue: 385000 },
-            { name: 'A. Glen Tennis & Rec', revenue: 340000 },
-            { name: 'Abel Sports', revenue: 320000 },
-            { name: 'Country Club International', revenue: 310000 },
-            { name: 'AS Lodge Tennis Courts', revenue: 260000 }
+            { name: 'Cash Sale Vic', revenue: 580000, category: 'Retail', lastOrder: '2025-12-15', tenure: '5.1 years', tier: 'A', status: 'Active' },
+            { name: 'Wyndham City Council', revenue: 520000, category: 'Government', lastOrder: '2025-11-20', tenure: '4.3 years', tier: 'A', status: 'Active' },
+            { name: 'Turf One', revenue: 490000, category: 'Sports', lastOrder: '2025-01-15', tenure: '5.0 years', tier: 'A', status: 'At Risk' },
+            { name: 'Dematic Pty Ltd', revenue: 420000, category: 'Industrial', lastOrder: '2024-08-10', tenure: '4.9 years', tier: 'A', status: 'Dormant' },
+            { name: 'Manningham City Council', revenue: 400000, category: 'Government', lastOrder: '2025-02-08', tenure: '4.8 years', tier: 'A', status: 'Active' },
+            { name: 'David Golf & Engineering', revenue: 385000, category: 'Golf', lastOrder: '2025-11-30', tenure: '5.1 years', tier: 'A', status: 'Active' },
+            { name: 'A. Glen Tennis & Rec', revenue: 340000, category: 'Tennis', lastOrder: '2023-02-27', tenure: '5.0 years', tier: 'A', status: 'Lost' },
+            { name: 'Abel Sports', revenue: 320000, category: 'Sports', lastOrder: '2025-10-22', tenure: '5.1 years', tier: 'A', status: 'Active' },
+            { name: 'Country Club International', revenue: 310000, category: 'Golf', lastOrder: '2025-09-15', tenure: '5.0 years', tier: 'B', status: 'Active' },
+            { name: 'AS Lodge Tennis Courts', revenue: 260000, category: 'Tennis', lastOrder: '2025-08-20', tenure: '5.0 years', tier: 'B', status: 'Active' }
         ];
         
+        function showCustomerModal(customer) {
+            document.getElementById('customerModalTitle').innerHTML = customer.name;
+            const statusColor = customer.status === 'Active' ? 'green' : customer.status === 'At Risk' ? 'orange' : 'red';
+            document.getElementById('customerModalContent').innerHTML = `
+                <div class="stat-row"><span class="stat-label">Category</span><span class="stat-value">${customer.category}</span></div>
+                <div class="stat-row"><span class="stat-label">Total Revenue</span><span class="stat-value">$${(customer.revenue/1000).toFixed(0)}K</span></div>
+                <div class="stat-row"><span class="stat-label">Last Order</span><span class="stat-value">${customer.lastOrder}</span></div>
+                <div class="stat-row"><span class="stat-label">Customer Tenure</span><span class="stat-value">${customer.tenure}</span></div>
+                <div class="stat-row"><span class="stat-label">Tier</span><span class="stat-value"><span class="badge ${customer.tier === 'A' ? 'green' : 'blue'}">${customer.tier}</span></span></div>
+                <div class="stat-row"><span class="stat-label">Status</span><span class="stat-value"><span class="badge ${statusColor}">${customer.status}</span></span></div>
+                <div style="background:#f1f5f9; padding:15px; border-radius:8px; margin-top:15px;">
+                    <strong>💡 Suggested Action:</strong><br>
+                    <span style="font-size:13px; color:#475569;">
+                        ${customer.status === 'Active' ? 'RETAIN: Schedule quarterly check-in to maintain relationship.' : 
+                          customer.status === 'At Risk' ? 'NURTURE: Reach out within 7 days to understand needs.' :
+                          'WIN-BACK: Send personalized offer within 48 hours.'}
+                    </span>
+                </div>
+            `;
+            document.getElementById('customerModal').classList.add('active');
+        }
+        
         document.getElementById('topCustomers').innerHTML = topCustomers.map(c => 
-            `<tr><td>${c.name}</td><td>$${(c.revenue/1000).toFixed(0)}K</td></tr>`
+            `<tr onclick="showCustomerModal(${JSON.stringify(c).replace(/"/g, '&quot;')})" style="cursor:pointer;"><td>${c.name}</td><td>$${(c.revenue/1000).toFixed(0)}K</td></tr>`
         ).join('');
         
         // Populate Urgent Renewals
