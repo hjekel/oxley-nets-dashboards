@@ -613,6 +613,18 @@
         }
         .quick-btn:hover { background: #2E8B57; }
 
+        /* ── Footer ───────────────────────────────────────────────── */
+        .app-footer {
+            background: #1a1a2e;
+            color: #475569;
+            text-align: center;
+            padding: 18px 24px;
+            font-size: 12px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .app-footer span { color: #64748b; }
+        .app-footer strong { color: #94a3b8; font-weight: 600; }
+
         /* ── Responsive ───────────────────────────────────────────── */
         @media (max-width: 1024px) {
             .grid-2, .grid-3, .grid-2-1, .grid-1-2 { grid-template-columns: 1fr; }
@@ -644,7 +656,10 @@
             <h1>Oxley <span>Nets</span></h1>
             <p>Business Intelligence &mdash; Data through February 2026</p>
         </div>
-        <div class="header-badge">AI Powered</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-left:auto;">
+            <div class="header-badge">AI Powered</div>
+            <div class="header-badge" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#94a3b8;">v1.0</div>
+        </div>
     </div>
 
     <nav class="tab-nav" role="tablist">
@@ -2597,6 +2612,14 @@ chartInitFns['forecast'] = function initForecastCharts() {
     }
 })();
 </script>
+
+<footer class="app-footer">
+    <strong>Version 1.0</strong>
+    <span>&nbsp;&bull;&nbsp;</span>
+    Built by <strong>VirtualWorxs / Incredible Projects</strong>
+    <span>&nbsp;&bull;&nbsp;</span>
+    Last updated: <strong>March 2026</strong>
+</footer>
 
 </body>
 </html>
