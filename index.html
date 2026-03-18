@@ -602,7 +602,9 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f1f5f9;
         }
         .table-toolbar .card-title { margin-bottom: 0; }
         .export-btns { display: flex; gap: 6px; }
@@ -844,7 +846,7 @@
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-left:auto;">
             <div class="header-badge">AI Powered</div>
-            <div class="header-badge" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#94a3b8;">v1.1</div>
+            <div class="header-badge" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#94a3b8;">v1.2</div>
         </div>
     </div>
 
@@ -1359,7 +1361,7 @@
             <span>Combined: $9.48M · All 18 shown</span>
         </div>
         <div class="card" style="border-radius:0 0 10px 10px;margin-top:0;">
-            <div class="export-btns" style="justify-content:flex-end;margin-bottom:10px;">
+            <div class="export-btns" style="justify-content:flex-end;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #f1f5f9;">
                 <button class="export-btn" onclick="copyTable('abcd-a-table')">📋 Copy</button>
                 <button class="export-btn" onclick="downloadCSV('abcd-a-table','abcd-atier.csv')">⬇ CSV</button>
             </div>
@@ -1527,11 +1529,11 @@
                 <div class="kpi-sub">+104% YoY</div>
                 <div class="kpi-trend up">↑ Expansion opportunity</div>
             </div>
-            <div class="kpi-card red">
+            <div class="kpi-card red" onclick="openBarrierModal()">
                 <div class="kpi-label">Sharpest Decline</div>
                 <div class="kpi-value">Barrier</div>
                 <div class="kpi-sub">−24% YoY · needs review</div>
-                <div class="kpi-trend down">⬇ Investigate root cause</div>
+                <div class="kpi-trend down">⬇ Investigate root cause →</div>
             </div>
         </div>
 
@@ -1858,6 +1860,9 @@ function openModal(title, bodyHTML) {
 function closeModal() {
     document.getElementById('globalModal').classList.remove('active');
 }
+// Expose on window so inline onclick attributes can always access them
+window.openModal  = openModal;
+window.closeModal = closeModal;
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 // ── Plotly shared config ───────────────────────────────────────
@@ -1951,6 +1956,25 @@ const modalHTML = {
 // Expose on window so inline onclick="openModal(..., modalHTML.x)" can see it
 window.modalHTML = modalHTML;
 
+// ── Barrier decline analysis modal ────────────────────────────
+window.openBarrierModal = function() {
+    openModal('Barrier Category — Decline Analysis', `
+        <div class="stat-row"><span class="stat-label">2023 Revenue</span><span class="stat-value">$1,214,921</span></div>
+        <div class="stat-row"><span class="stat-label">2024 Revenue</span><span class="stat-value"><span class="badge red">$920,146 (−24%)</span></span></div>
+        <div class="stat-row"><span class="stat-label">Barrier Sport SKU</span><span class="stat-value"><span class="badge red">−63% YoY</span></span></div>
+        <div class="stat-row"><span class="stat-label">Standard Barrier SKU</span><span class="stat-value"><span class="badge red">−56% YoY</span></span></div>
+        <div class="insight red" style="margin-top:14px;">
+            <h4>⚠ Possible Root Causes</h4>
+            <p>Barrier Sport and standard Barrier SKUs both declining sharply. Possible causes: competitor pricing, market saturation, or product lifecycle end. Conveyor Nets (−100%) and Tennis Curt Nylon (−100%) also discontinued.</p>
+        </div>
+        <div class="insight green" style="margin-top:12px;">
+            <h4>✅ Recommended Actions</h4>
+            <p>1. Survey top 10 Barrier customers on purchasing intent. 2. Review competitor pricing. 3. Consider a product refresh or bundle promotion. 4. Redirect Barrier sport budget toward growing Golf category (+104%).</p>
+        </div>
+        <button class="modal-nav-btn" onclick="closeModal();switchTab('products')">→ View Product Performance Tab</button>
+    `);
+};
+
 // Register chart init for exec tab
 chartInitFns['exec'] = function initExecCharts() {
 
@@ -2001,17 +2025,20 @@ chartInitFns['exec'] = function initExecCharts() {
         values: catValues,
         hole: 0.42,
         marker: { colors: COLORS.cat },
-        textinfo: 'label+percent',
-        textfont: { size: 11 },
-        hovertemplate: '<b>%{label}</b><br>$%{value:,.0f}<br>%{percent}<extra></extra>',
-        pull: catValues.map((_, i) => i === 0 ? 0.04 : 0)  // slight pull on top slice
+        textinfo: 'percent',         // label names shown in legend only — no slice overlap
+        textposition: 'inside',
+        textfont: { size: 11, color: 'white' },
+        insidetextorientation: 'radial',
+        hovertemplate: '<b>%{label}</b><br>$%{value:,.0f} · %{percent}<extra></extra>',
+        pull: catValues.map((_, i) => i === 0 ? 0.04 : 0)
     }], {
         ...PLOTLY_LAYOUT_BASE,
-        margin: { t: 16, r: 16, b: 16, l: 16 },
+        margin: { t: 16, r: 140, b: 16, l: 16 },
         showlegend: true,
         legend: {
             orientation: 'v',
-            x: 1.02, y: 0.5,
+            x: 1.0, y: 0.5,
+            xanchor: 'left',
             font: { size: 11 },
             itemsizing: 'constant'
         }
@@ -2845,23 +2872,28 @@ window.toggleAISidebar = function() {
 
 function getAIResponse(msg) {
     const m = msg.toLowerCase();
-    if (/revenue|sales|income|total/.test(m))
-        return '📊 Total revenue from July 2020 to February 2026 is <strong>$20.1M</strong>. FY2022 was the peak at $4.0M. FY2025 came in at $3.3M, with a strong Q4 driven by November\'s record $528K month.';
-    if (/customer|account|client/.test(m))
-        return '👥 Oxley Nets has <strong>1,350+ customers</strong>. The top 18 A-tier accounts generate ~47% of revenue. 236 customers are currently dormant (12+ months), representing $6.1M at risk.';
-    if (/renewal|renew|replace/.test(m))
-        return '🔄 There are <strong>339 renewal opportunities</strong> worth $2.6M in total potential. 15 customers are overdue ($95K), 128 are due within 12 months ($665K), and 196 are approaching in 1–2 years ($1.8M).';
-    if (/quote|pipeline|pending/.test(m))
-        return '📋 The quote pipeline has <strong>$4.0M in pending quotes</strong> against a 29.4% conversion rate. $3.6M+ has been pending 90+ days — aggressive follow-up could unlock significant revenue.';
-    if (/product|categor|golf|barrier|cricket|football|tennis/.test(m))
-        return '📦 <strong>Barrier</strong> is the top category ($4.4M all-time) but declining -24% YoY. <strong>Golf</strong> is the fastest growing (+104% in 2024). Football nets are growing +34%. Watch Barrier Sport which dropped -63%.';
-    if (/forecast|predict|2026|future/.test(m))
-        return '📅 Based on the H2 2025 recovery trend and current $270K Jan–Feb 2026, the full-year 2026 projection is <strong>$3.0–3.5M</strong>. Q4 is historically the strongest quarter — target October–November for major deals.';
-    if (/at.?risk|dormant|churn/.test(m))
-        return '⚠️ <strong>236 customers</strong> with $6.1M historical revenue are dormant (12+ months no order). 47 of these are A-tier accounts. Top at-risk: A. Glen Tennis ($340K), A Star Sports ($461K), Multiplex Construction ($281K).';
-    if (/season|month|peak|low/.test(m))
-        return '📅 November is Oxley\'s peak month — <strong>$528K in November 2025</strong>. Q4 (Oct–Dec) is the strongest quarter. H1 tends to be slow, especially April–June. Use slow periods for proactive quote follow-up.';
-    return '🤔 That\'s a great question! I can help with revenue analysis, customer insights, renewal opportunities, the quote pipeline, product performance, and seasonal trends. Try asking about any of these topics — full AI integration is coming soon.';
+    // Specific patterns checked BEFORE broad ones to avoid false matches
+    if (/at.?risk|dormant|churn|inactive|lost/.test(m))
+        return '⚠️ <strong>236 customers</strong> with $6.1M historical revenue are dormant (12+ months no order). 47 are A-tier accounts. Top at-risk: A. Glen Tennis ($340K), A Star Sports ($461K), Multiplex Construction ($281K). Switch to the Customer Analysis tab for the full at-risk list.';
+    if (/renew|replacement|lifecycle|due/.test(m))
+        return '🔄 There are <strong>339 renewal opportunities</strong> worth $2.6M total. 15 customers are overdue ($95K), 128 are due within 12 months ($665K), 196 are approaching in 1–2 years ($1.8M). Go to the Pipeline tab for the full call list.';
+    if (/quote|pipeline|pending|convert|won|lost quote/.test(m))
+        return '📋 The quote pipeline holds <strong>$4.0M in pending quotes</strong> at a 29.4% conversion rate. $3.6M+ has been sitting 90+ days — aggressive follow-up here could unlock significant revenue quickly.';
+    if (/forecast|predict|2026|projection|outlook|future/.test(m))
+        return '📅 Full-year 2026 projection is <strong>$3.0–3.5M</strong> based on H2 2025 recovery trend and $270K Jan–Feb 2026 start. Q4 is historically the strongest quarter — prioritise October–November outreach.';
+    if (/barrier|golf|cricket|football|tennis|hockey|categor|product/.test(m))
+        return '📦 <strong>Barrier</strong> is the top all-time category ($4.4M) but declining −24% YoY. <strong>Golf</strong> is the fastest growing (+104% in 2024). Football up +34%. Barrier Sport specifically dropped −63% and needs urgent review.';
+    if (/season|month|peak|slow|low|november|august|q4|quarter/.test(m))
+        return '📅 <strong>November is the peak month</strong> — $528K in November 2025. Q4 (Oct–Dec) is consistently the best quarter. H1 is slow, especially April–June ($18K in April 2025!). Use quiet periods for proactive quote follow-up and renewals.';
+    if (/revenue|sales|income|total|earn|turnover/.test(m))
+        return '📊 Total revenue July 2020 – February 2026 is <strong>$20.1M</strong>. FY2022 was the all-time peak at $4.0M. FY2025 delivered $3.3M with a strong H2 recovery. November 2025 was the single best month at $528K.';
+    if (/customer|account|client|buyer|purchaser/.test(m))
+        return '👥 Oxley Nets has <strong>1,350+ customers</strong>. The top 18 A-tier accounts generate ~47% of all revenue. 236 customers are currently dormant (12+ months), putting $6.1M of historical revenue at risk. Use the Customer Analysis tab to see the full breakdown.';
+    if (/top|best|biggest|largest|who/.test(m))
+        return '🏆 The top customers are: Cash Sale Tas ($1.43M), Wyndham City Council ($766K), Dematic Pty Ltd ($754K), Abel Sports ($737K), and City of Karratha ($599K). Go to Customer Analysis → Top 15 for the full list.';
+    if (/tip|advice|recommend|action|should|priorit|focus/.test(m))
+        return '💡 Top 3 actions: (1) Follow up $3.6M in stale 90+ day quotes, (2) Launch a win-back campaign for 47 dormant A-tier accounts, (3) Capitalise on Golf growth (+104%) with targeted outreach to sports facilities.';
+    return '🤔 I can help with: <strong>revenue</strong>, <strong>customers</strong>, <strong>renewals</strong>, <strong>quotes</strong>, <strong>products</strong>, <strong>seasonal trends</strong>, or <strong>recommendations</strong>. Try a question like "Who are the top customers?" or "What should I focus on?"';
 }
 
 window.sendAIMessage = function() {
@@ -2971,7 +3003,7 @@ window.downloadCSV = function(tableId, filename) {
 </div>
 
 <footer class="app-footer">
-    <strong>Version 1.1</strong>
+    <strong>Version 1.2</strong>
     <span>&nbsp;&bull;&nbsp;</span>
     Built by <strong>VirtualWorxs / Incredible Projects</strong>
     <span>&nbsp;&bull;&nbsp;</span>
