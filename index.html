@@ -738,6 +738,22 @@
             font-size: 13px;
         }
         #ai-send:hover { background: #247a4a; }
+        #ai-send:disabled { background: #64748b; cursor: not-allowed; }
+        #ai-input:disabled { opacity: 0.6; }
+        /* Animated typing dots */
+        .ai-typing { display: inline-flex; gap: 4px; align-items: center; padding: 2px 0; }
+        .ai-typing span {
+            width: 7px; height: 7px;
+            background: #64748b;
+            border-radius: 50%;
+            animation: aiDot 1.2s ease-in-out infinite;
+        }
+        .ai-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .ai-typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes aiDot {
+            0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+            40%            { transform: scale(1);   opacity: 1; }
+        }
         #ai-overlay {
             display: none;
             position: fixed;
@@ -2870,57 +2886,164 @@ window.toggleAISidebar = function() {
     }
 };
 
-function getAIResponse(msg) {
-    const m = msg.toLowerCase();
-    // Specific patterns checked BEFORE broad ones to avoid false matches
-    if (/at.?risk|dormant|churn|inactive|lost/.test(m))
-        return '⚠️ <strong>236 customers</strong> with $6.1M historical revenue are dormant (12+ months no order). 47 are A-tier accounts. Top at-risk: A. Glen Tennis ($340K), A Star Sports ($461K), Multiplex Construction ($281K). Switch to the Customer Analysis tab for the full at-risk list.';
-    if (/renew|replacement|lifecycle|due/.test(m))
-        return '🔄 There are <strong>339 renewal opportunities</strong> worth $2.6M total. 15 customers are overdue ($95K), 128 are due within 12 months ($665K), 196 are approaching in 1–2 years ($1.8M). Go to the Pipeline tab for the full call list.';
-    if (/quote|pipeline|pending|convert|won|lost quote/.test(m))
-        return '📋 The quote pipeline holds <strong>$4.0M in pending quotes</strong> at a 29.4% conversion rate. $3.6M+ has been sitting 90+ days — aggressive follow-up here could unlock significant revenue quickly.';
-    if (/forecast|predict|2026|projection|outlook|future/.test(m))
-        return '📅 Full-year 2026 projection is <strong>$3.0–3.5M</strong> based on H2 2025 recovery trend and $270K Jan–Feb 2026 start. Q4 is historically the strongest quarter — prioritise October–November outreach.';
-    if (/barrier|golf|cricket|football|tennis|hockey|categor|product/.test(m))
-        return '📦 <strong>Barrier</strong> is the top all-time category ($4.4M) but declining −24% YoY. <strong>Golf</strong> is the fastest growing (+104% in 2024). Football up +34%. Barrier Sport specifically dropped −63% and needs urgent review.';
-    if (/season|month|peak|slow|low|november|august|q4|quarter/.test(m))
-        return '📅 <strong>November is the peak month</strong> — $528K in November 2025. Q4 (Oct–Dec) is consistently the best quarter. H1 is slow, especially April–June ($18K in April 2025!). Use quiet periods for proactive quote follow-up and renewals.';
-    if (/revenue|sales|income|total|earn|turnover/.test(m))
-        return '📊 Total revenue July 2020 – February 2026 is <strong>$20.1M</strong>. FY2022 was the all-time peak at $4.0M. FY2025 delivered $3.3M with a strong H2 recovery. November 2025 was the single best month at $528K.';
-    if (/customer|account|client|buyer|purchaser/.test(m))
-        return '👥 Oxley Nets has <strong>1,350+ customers</strong>. The top 18 A-tier accounts generate ~47% of all revenue. 236 customers are currently dormant (12+ months), putting $6.1M of historical revenue at risk. Use the Customer Analysis tab to see the full breakdown.';
-    if (/top|best|biggest|largest|who/.test(m))
-        return '🏆 The top customers are: Cash Sale Tas ($1.43M), Wyndham City Council ($766K), Dematic Pty Ltd ($754K), Abel Sports ($737K), and City of Karratha ($599K). Go to Customer Analysis → Top 15 for the full list.';
-    if (/tip|advice|recommend|action|should|priorit|focus/.test(m))
-        return '💡 Top 3 actions: (1) Follow up $3.6M in stale 90+ day quotes, (2) Launch a win-back campaign for 47 dormant A-tier accounts, (3) Capitalise on Golf growth (+104%) with targeted outreach to sports facilities.';
-    return '🤔 I can help with: <strong>revenue</strong>, <strong>customers</strong>, <strong>renewals</strong>, <strong>quotes</strong>, <strong>products</strong>, <strong>seasonal trends</strong>, or <strong>recommendations</strong>. Try a question like "Who are the top customers?" or "What should I focus on?"';
+// ── AI Worker config & data summary ──────────────────────────────
+const AI_WORKER_URL = 'https://oxley-ai-proxy.hjekel.workers.dev/';
+
+function buildDataSummary() {
+    return {
+        period: 'July 2020 – February 2026',
+        totalRevenue: 20054113,
+        fiscalYears: [
+            { year: 'FY2020', revenue: 1276484,  note: 'Partial year Jul–Dec only' },
+            { year: 'FY2021', revenue: 3680498 },
+            { year: 'FY2022', revenue: 3958430,  note: 'All-time peak' },
+            { year: 'FY2023', revenue: 3862783 },
+            { year: 'FY2024', revenue: 3673030 },
+            { year: 'FY2025', revenue: 3333121 },
+            { year: 'FY2026 YTD', revenue: 269767, note: 'Jul 2025 – Feb 2026' }
+        ],
+        customers: {
+            total: 1350,
+            abcdTiers: {
+                A: { count: 18,   combinedRevenue: 9481406,  description: 'Top 1% — highest value accounts' },
+                B: { count: 75,   combinedRevenue: 9409324,  description: 'Top 2–5%' },
+                C: { count: 257,  combinedRevenue: 9436306,  description: 'Top 6–20%' },
+                D: { count: 1000, combinedRevenue: 4793773,  description: 'Bottom 80%' }
+            },
+            atRisk: {
+                count: 236,
+                historicalRevenue: 6100000,
+                dormantThresholdMonths: 12,
+                topAtRisk: atRiskCustomers.slice(0, 5).map(c => ({
+                    name: c.name, revenue: c.revenue, lastOrder: c.lastOrder, dormantDays: c.days
+                }))
+            }
+        },
+        topCustomers: top15Customers.map(c => ({
+            name: c.name, allTimeRevenue: c.revenue, totalOrders: c.orders, tier: c.tier
+        })),
+        renewalPipeline: {
+            total: 339,
+            totalPotentialValue: 2600000,
+            overdue:   { count: 15,  value: 95000 },
+            dueSoon:   { count: 128, value: 665000,  window: 'within 12 months' },
+            approaching: { count: 196, value: 1800000, window: '1–2 years' }
+        },
+        quotePipeline: {
+            totalQuoted: 5700000,
+            converted:   1700000,
+            pending:     4000000,
+            conversionRate: 0.294,
+            agingBreakdown: {
+                days0to30:  128000,
+                days31to60: 153000,
+                days61to90: 155000,
+                days90plus: 3600000
+            }
+        },
+        categories: [
+            { name: 'Barrier',    allTimeRevenue: 4800000, yoyChange2024: -0.24, note: 'Top category, but declining' },
+            { name: 'Other Nets', allTimeRevenue: 4600000 },
+            { name: 'Football',   allTimeRevenue: 2800000, yoyChange2024: 0.34 },
+            { name: 'Tennis',     allTimeRevenue: 2600000 },
+            { name: 'Cricket',    allTimeRevenue: 2200000 },
+            { name: 'Other',      allTimeRevenue: 1700000 },
+            { name: 'Golf',       allTimeRevenue: 1200000, yoyChange2024: 1.04, note: 'Fastest growing' },
+            { name: 'Hockey',     allTimeRevenue: 150000 }
+        ],
+        seasonality2025: {
+            peakMonth: 'November', peakRevenue: 527886,
+            lowestMonth: 'April',  lowestRevenue: 18564,
+            h1Total: 414446,  h2Total: 1824299,
+            monthly: {
+                Jan: 68029, Feb: 26588, Mar: 59522, Apr: 18564, May: 211780, Jun: 29963,
+                Jul: 160751, Aug: 318384, Sep: 231983, Oct: 358450, Nov: 527886, Dec: 226825
+            }
+        },
+        ytd2026: { total: 269767, jan: 181532, feb: 88235 }
+    };
 }
 
-window.sendAIMessage = function() {
-    const input = document.getElementById('ai-input');
+// Simple markdown → HTML converter for AI responses
+function mdToHtml(text) {
+    return text
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/`(.+?)`/g, '<code style="background:#f1f5f9;padding:1px 4px;border-radius:3px;font-size:12px;">$1</code>')
+        .replace(/^#{1,3}\s+(.+)$/gm, '<strong style="font-size:13px;display:block;margin-top:8px;">$1</strong>')
+        .replace(/^[-•]\s+(.+)$/gm, '<div style="padding-left:12px;margin:2px 0;">• $1</div>')
+        .replace(/\n\n/g, '<br><br>')
+        .replace(/\n/g, '<br>');
+}
+
+window.sendAIMessage = async function() {
+    const input   = document.getElementById('ai-input');
+    const sendBtn = document.getElementById('ai-send');
     const messages = document.getElementById('ai-messages');
     const text = input.value.trim();
     if (!text) return;
 
-    // Add user message
+    // Append user bubble
     const userMsg = document.createElement('div');
     userMsg.className = 'ai-msg user';
     userMsg.textContent = text;
     messages.appendChild(userMsg);
     input.value = '';
 
-    // Typing indicator
+    // Disable controls while waiting
+    input.disabled = true;
+    sendBtn.disabled = true;
+    sendBtn.textContent = '…';
+
+    // Animated typing indicator
     const typing = document.createElement('div');
     typing.className = 'ai-msg bot';
-    typing.innerHTML = '<em style="color:#64748b;">Thinking…</em>';
+    typing.innerHTML = '<span class="ai-typing"><span></span><span></span><span></span></span>';
     messages.appendChild(typing);
     messages.scrollTop = messages.scrollHeight;
 
-    // Respond after brief delay
-    setTimeout(() => {
-        typing.innerHTML = getAIResponse(text);
+    try {
+        const res = await fetch(AI_WORKER_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text, dataSummary: buildDataSummary() })
+        });
+
+        if (!res.ok) throw new Error('Server error ' + res.status);
+
+        const data = await res.json();
+
+        // Extract text — handle Claude API format and simpler formats
+        let responseText = '';
+        if (Array.isArray(data.content)) {
+            responseText = data.content
+                .filter(b => b.type === 'text')
+                .map(b => b.text)
+                .join('');
+        } else if (typeof data.text === 'string') {
+            responseText = data.text;
+        } else if (typeof data.response === 'string') {
+            responseText = data.response;
+        } else if (typeof data.message === 'string') {
+            responseText = data.message;
+        } else {
+            responseText = JSON.stringify(data, null, 2);
+        }
+
+        typing.innerHTML = mdToHtml(responseText);
+
+    } catch (err) {
+        typing.innerHTML =
+            '⚠️ Couldn\'t reach the AI service right now — please try again in a moment.' +
+            '<br><em style="color:#64748b;font-size:11px;">(' + err.message + ')</em>';
+    } finally {
+        input.disabled = false;
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Send';
+        input.focus();
         messages.scrollTop = messages.scrollHeight;
-    }, 600);
+    }
 };
 
 // ── Customer detail modals ───────────────────────────────────────
