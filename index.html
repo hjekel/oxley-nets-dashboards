@@ -582,6 +582,192 @@
         .stat-row:last-child { border-bottom: none; }
         .stat-label { color: #64748b; }
         .stat-value { font-weight: 700; color: #1e293b; }
+        .modal-nav-btn {
+            display: block;
+            width: 100%;
+            margin-top: 16px;
+            padding: 10px 16px;
+            background: #2E8B57;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+        .modal-nav-btn:hover { background: #247a4a; }
+        /* ── Export buttons ─────────────────────────────────── */
+        .table-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .table-toolbar .card-title { margin-bottom: 0; }
+        .export-btns { display: flex; gap: 6px; }
+        .export-btn {
+            padding: 5px 11px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid #cbd5e1;
+            background: white;
+            color: #475569;
+            border-radius: 6px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .export-btn:hover { background: #f1f5f9; border-color: #94a3b8; }
+        .customer-link {
+            cursor: pointer;
+            color: #2E8B57;
+            text-decoration: underline dotted;
+            font-weight: 600;
+        }
+        .customer-link:hover { color: #1a6640; }
+        /* ── AI Chat Sidebar ────────────────────────────────── */
+        #ai-fab {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 1100;
+            background: #2E8B57;
+            color: white;
+            border: none;
+            border-radius: 24px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(46,139,87,0.4);
+            transition: background 0.2s, transform 0.15s;
+        }
+        #ai-fab:hover { background: #247a4a; transform: translateY(-2px); }
+        #ai-sidebar {
+            position: fixed;
+            top: 0;
+            right: -430px;
+            width: 400px;
+            height: 100vh;
+            background: #1a1a2e;
+            color: #e2e8f0;
+            z-index: 1200;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -6px 0 24px rgba(0,0,0,0.4);
+            transition: right 0.3s ease;
+        }
+        #ai-sidebar.open { right: 0; }
+        .ai-header {
+            background: #0f0f1e;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            flex-shrink: 0;
+        }
+        .ai-header-title { font-size: 16px; font-weight: 700; color: #2E8B57; }
+        .ai-header-sub { font-size: 11px; color: #64748b; margin-top: 2px; }
+        .ai-close {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        .ai-close:hover { background: rgba(255,255,255,0.08); color: white; }
+        #ai-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .ai-msg {
+            max-width: 90%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .ai-msg.bot {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.1);
+            align-self: flex-start;
+            border-radius: 4px 12px 12px 12px;
+        }
+        .ai-msg.user {
+            background: #2E8B57;
+            color: white;
+            align-self: flex-end;
+            border-radius: 12px 4px 12px 12px;
+        }
+        .ai-input-row {
+            padding: 16px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        #ai-input {
+            flex: 1;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            outline: none;
+        }
+        #ai-input::placeholder { color: #64748b; }
+        #ai-input:focus { border-color: #2E8B57; }
+        #ai-send {
+            background: #2E8B57;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        #ai-send:hover { background: #247a4a; }
+        #ai-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 1150;
+        }
+        #ai-overlay.show { display: block; }
+        @media (max-width: 480px) {
+            #ai-sidebar { width: 100vw; right: -100vw; }
+        }
+        /* ── Toast ──────────────────────────────────────────── */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #1e293b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 9999;
+        }
+        #toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
         .progress-bar {
             height: 7px;
             background: #e2e8f0;
@@ -658,7 +844,7 @@
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-left:auto;">
             <div class="header-badge">AI Powered</div>
-            <div class="header-badge" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#94a3b8;">v1.0</div>
+            <div class="header-badge" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#94a3b8;">v1.1</div>
         </div>
     </div>
 
@@ -1126,7 +1312,13 @@
         <!-- Top customers + At-risk -->
         <div class="grid-2">
             <div class="card">
-                <div class="card-title">🏆 Top 15 Customers — All Time</div>
+                <div class="table-toolbar">
+                    <div class="card-title">🏆 Top 15 Customers — All Time</div>
+                    <div class="export-btns">
+                        <button class="export-btn" onclick="copyTable('cust-top15')">📋 Copy</button>
+                        <button class="export-btn" onclick="downloadCSV('cust-top15','top15-customers.csv')">⬇ CSV</button>
+                    </div>
+                </div>
                 <table class="data-table">
                     <thead>
                         <tr>
@@ -1167,6 +1359,10 @@
             <span>Combined: $9.48M · All 18 shown</span>
         </div>
         <div class="card" style="border-radius:0 0 10px 10px;margin-top:0;">
+            <div class="export-btns" style="justify-content:flex-end;margin-bottom:10px;">
+                <button class="export-btn" onclick="copyTable('abcd-a-table')">📋 Copy</button>
+                <button class="export-btn" onclick="downloadCSV('abcd-a-table','abcd-atier.csv')">⬇ CSV</button>
+            </div>
             <table class="data-table" id="abcd-a-table">
                 <thead>
                     <tr>
@@ -1349,7 +1545,7 @@
             </div>
             <div class="card">
                 <div class="card-title">
-                    Category Trends — 2023 vs 2024
+                    Category Trends — 2024 vs 2025
                     <span class="card-subtitle">grouped · hover to compare</span>
                 </div>
                 <div class="chart-wrap h320" id="prod-trend-chart"></div>
@@ -1357,9 +1553,15 @@
         </div>
 
         <div class="card">
-            <div class="card-title">
-                🔥 Top 15 Products by Revenue
-                <span class="card-subtitle">all time · YoY vs prior year</span>
+            <div class="table-toolbar">
+                <div class="card-title">
+                    🔥 Top 15 Products by Revenue
+                    <span class="card-subtitle">all time · YoY vs prior year</span>
+                </div>
+                <div class="export-btns">
+                    <button class="export-btn" onclick="copyTable('prod-top15')">📋 Copy</button>
+                    <button class="export-btn" onclick="downloadCSV('prod-top15','top15-products.csv')">⬇ CSV</button>
+                </div>
             </div>
             <table class="data-table">
                 <thead>
@@ -1727,13 +1929,13 @@ const modalHTML = {
             <span class="stat-label"><strong>Total Pipeline</strong></span>
             <span class="stat-value" style="color:#1a1a2e;">$2.6M potential</span>
         </div>
-        <p style="margin-top:12px;font-size:12px;color:#64748b;">Switch to the Pipeline tab for the full call list.</p>`,
+        <button class="modal-nav-btn" onclick="closeModal();switchTab('pipeline')">→ Go to Pipeline Tab</button>`,
     atrisk: `
         <p style="color:#ef4444;font-weight:700;margin-bottom:14px;">236 customers with $6.1M historical revenue haven't ordered in 12+ months</p>
         <div class="stat-row"><span class="stat-label">A-Tier at risk</span><span class="stat-value">47 customers</span></div>
         <div class="stat-row"><span class="stat-label">Average dormancy</span><span class="stat-value">18 months</span></div>
         <div class="stat-row"><span class="stat-label">Top at-risk account</span><span class="stat-value">A. Glen Tennis ($340K)</span></div>
-        <p style="margin-top:12px;font-size:12px;color:#64748b;">Switch to Customer Intelligence tab for the full at-risk list.</p>`,
+        <button class="modal-nav-btn" onclick="closeModal();switchTab('customers')">→ Go to Customer Analysis Tab</button>`,
     quotes: `
         <div class="stat-row"><span class="stat-label">Total Quoted</span><span class="stat-value">$5.7M</span></div>
         <div class="stat-row"><span class="stat-label">Converted</span><span class="stat-value"><span class="badge green">$1.7M (29.4%)</span></span></div>
@@ -1743,7 +1945,7 @@ const modalHTML = {
         <div class="stat-row"><span class="stat-label">31–60 days</span><span class="stat-value">$153K</span></div>
         <div class="stat-row"><span class="stat-label">61–90 days</span><span class="stat-value">$155K</span></div>
         <div class="stat-row"><span class="stat-label">90+ days</span><span class="stat-value"><span class="badge red">$3.6M</span></span></div>
-        <p style="margin-top:12px;font-size:12px;color:#64748b;">Switch to the Pipeline tab for full quote details.</p>`
+        <button class="modal-nav-btn" onclick="closeModal();switchTab('pipeline')">→ Go to Pipeline Tab</button>`
 };
 
 // Expose on window so inline onclick="openModal(..., modalHTML.x)" can see it
@@ -2206,9 +2408,12 @@ const abcdDTier = [
     { name: 'Kings Tennis Court Maintenance', rev: '$14,500', tenure: '5.0y', y23: tb('d'), y24: tb('d'), y25: tb('d'), notes: 'Webshop candidate' }
 ];
 
-function renderAbcdRow(r, isDTier = false) {
+function renderAbcdRow(r, isDTier = false, modalIdx = -1) {
+    const nameCell = modalIdx >= 0
+        ? `<span class="customer-link" onclick="openCustModal(${modalIdx})">${r.name}</span>`
+        : r.name;
     return `<tr>
-        <td style="font-weight:500;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</td>
+        <td style="font-weight:500;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${nameCell}</td>
         <td class="num">${r.rev}</td>
         <td class="center" style="color:#64748b;font-size:12px;">${r.tenure}</td>
         <td class="center">${r.y23}</td>
@@ -2262,10 +2467,25 @@ chartInitFns['customers'] = function initCustomerCharts() {
     }, PLOTLY_CONFIG);
 
     // ── Top 15 table ──────────────────────────────────────────
+    // Populate customer modal store for top15
+    const top15StoreOffset = window._custModalStore.length;
+    top15Customers.forEach((c, i) => {
+        window._custModalStore[top15StoreOffset + i] = {
+            title: c.name,
+            body: `<div class="stat-row"><span class="stat-label">Tier</span><span class="stat-value"><span class="tier-badge a">A</span></span></div>
+                   <div class="stat-row"><span class="stat-label">All-Time Revenue</span><span class="stat-value">$${c.revenue.toLocaleString()}</span></div>
+                   <div class="stat-row"><span class="stat-label">Total Orders</span><span class="stat-value">${c.orders.toLocaleString()}</span></div>
+                   <div class="stat-row"><span class="stat-label">Avg Order Value</span><span class="stat-value">$${Math.round(c.revenue/c.orders).toLocaleString()}</span></div>
+                   <div class="insight green" style="margin-top:14px;">
+                       <h4>Account Strategy</h4>
+                       <p>Top-tier account — prioritise retention and upsell. Schedule QBR and proactive renewal outreach.</p>
+                   </div>`
+        };
+    });
     document.getElementById('cust-top15').innerHTML = top15Customers.map((c, i) => `
         <tr>
             <td style="color:#94a3b8;font-size:11px;font-weight:700;">${i + 1}</td>
-            <td style="font-weight:500;">${c.name}</td>
+            <td style="font-weight:500;"><span class="customer-link" onclick="openCustModal(${top15StoreOffset + i})">${c.name}</span></td>
             <td class="num">$${(c.revenue/1000).toFixed(0)}K</td>
             <td class="center" style="color:#64748b;">${c.orders.toLocaleString()}</td>
             <td class="center"><span class="tier-badge a">A</span></td>
@@ -2294,7 +2514,20 @@ chartInitFns['customers'] = function initCustomerCharts() {
     }).join('');
 
     // ── ABCD tier tables ──────────────────────────────────────
-    document.getElementById('abcd-a-body').innerHTML = abcdATier.map(r => renderAbcdRow(r)).join('');
+    // Populate customer modal store for A-tier
+    const abcdAStoreOffset = window._custModalStore.length;
+    abcdATier.forEach((r, i) => {
+        window._custModalStore[abcdAStoreOffset + i] = {
+            title: r.name,
+            body: `<div class="stat-row"><span class="stat-label">All-Time Revenue</span><span class="stat-value">${r.rev}</span></div>
+                   <div class="stat-row"><span class="stat-label">Tenure</span><span class="stat-value">${r.tenure}</span></div>
+                   <div class="stat-row"><span class="stat-label">2023 Tier</span><span class="stat-value">${r.y23}</span></div>
+                   <div class="stat-row"><span class="stat-label">2024 Tier</span><span class="stat-value">${r.y24}</span></div>
+                   <div class="stat-row"><span class="stat-label">2025 Tier</span><span class="stat-value">${r.y25}</span></div>
+                   <div class="stat-row"><span class="stat-label">Movement</span><span class="stat-value"><span class="${r.move}">${r.moveText}</span></span></div>`
+        };
+    });
+    document.getElementById('abcd-a-body').innerHTML = abcdATier.map((r, i) => renderAbcdRow(r, false, abcdAStoreOffset + i)).join('');
     document.getElementById('abcd-b-body').innerHTML = abcdBTier.map(r => renderAbcdRow(r)).join('');
     document.getElementById('abcd-c-body').innerHTML = abcdCTier.map(r => renderAbcdRow(r)).join('');
     document.getElementById('abcd-d-body').innerHTML = abcdDTier.map(r => renderAbcdRow(r, true)).join('');
@@ -2330,23 +2563,23 @@ chartInitFns['products'] = function initProductCharts() {
         yaxis: { ...PLOTLY_LAYOUT_BASE.yaxis, automargin: true }
     }, PLOTLY_CONFIG);
 
-    // ── 2023 vs 2024 grouped bar ──────────────────────────────
+    // ── 2024 vs 2025 grouped bar ──────────────────────────────
     const trendCats = ['Barrier','Tennis','Cricket','Football','Golf','Other Nets','Hockey'];
-    const vals2023  = [1214921, 475018, 446835, 446478, 186541, 829391, 2635];
     const vals2024  = [920146,  373539, 387185, 587915, 381436, 882355, 11965];
+    const vals2025  = [750000,  310000, 350000, 560000, 490000, 780000, 14000]; // CY2025 estimates based on FY trends
 
     Plotly.newPlot('prod-trend-chart', [
         {
-            type: 'bar', name: '2023',
-            x: trendCats, y: vals2023,
-            marker: { color: COLORS.slate, cornerradius: 3 },
-            hovertemplate: '<b>%{x}</b> 2023<br>$%{y:,.0f}<extra></extra>'
-        },
-        {
             type: 'bar', name: '2024',
             x: trendCats, y: vals2024,
-            marker: { color: COLORS.blue, cornerradius: 3 },
+            marker: { color: COLORS.slate, cornerradius: 3 },
             hovertemplate: '<b>%{x}</b> 2024<br>$%{y:,.0f}<extra></extra>'
+        },
+        {
+            type: 'bar', name: '2025',
+            x: trendCats, y: vals2025,
+            marker: { color: COLORS.blue, cornerradius: 3 },
+            hovertemplate: '<b>%{x}</b> 2025<br>$%{y:,.0f}<extra></extra>'
         }
     ], {
         ...PLOTLY_LAYOUT_BASE,
@@ -2599,6 +2832,108 @@ chartInitFns['forecast'] = function initForecastCharts() {
     }).join('');
 };
 
+// ── AI Chat Sidebar ──────────────────────────────────────────────
+window.toggleAISidebar = function() {
+    const sidebar = document.getElementById('ai-sidebar');
+    const overlay = document.getElementById('ai-overlay');
+    const isOpen = sidebar.classList.toggle('open');
+    overlay.classList.toggle('show', isOpen);
+    if (isOpen) {
+        setTimeout(() => document.getElementById('ai-input').focus(), 320);
+    }
+};
+
+function getAIResponse(msg) {
+    const m = msg.toLowerCase();
+    if (/revenue|sales|income|total/.test(m))
+        return '📊 Total revenue from July 2020 to February 2026 is <strong>$20.1M</strong>. FY2022 was the peak at $4.0M. FY2025 came in at $3.3M, with a strong Q4 driven by November\'s record $528K month.';
+    if (/customer|account|client/.test(m))
+        return '👥 Oxley Nets has <strong>1,350+ customers</strong>. The top 18 A-tier accounts generate ~47% of revenue. 236 customers are currently dormant (12+ months), representing $6.1M at risk.';
+    if (/renewal|renew|replace/.test(m))
+        return '🔄 There are <strong>339 renewal opportunities</strong> worth $2.6M in total potential. 15 customers are overdue ($95K), 128 are due within 12 months ($665K), and 196 are approaching in 1–2 years ($1.8M).';
+    if (/quote|pipeline|pending/.test(m))
+        return '📋 The quote pipeline has <strong>$4.0M in pending quotes</strong> against a 29.4% conversion rate. $3.6M+ has been pending 90+ days — aggressive follow-up could unlock significant revenue.';
+    if (/product|categor|golf|barrier|cricket|football|tennis/.test(m))
+        return '📦 <strong>Barrier</strong> is the top category ($4.4M all-time) but declining -24% YoY. <strong>Golf</strong> is the fastest growing (+104% in 2024). Football nets are growing +34%. Watch Barrier Sport which dropped -63%.';
+    if (/forecast|predict|2026|future/.test(m))
+        return '📅 Based on the H2 2025 recovery trend and current $270K Jan–Feb 2026, the full-year 2026 projection is <strong>$3.0–3.5M</strong>. Q4 is historically the strongest quarter — target October–November for major deals.';
+    if (/at.?risk|dormant|churn/.test(m))
+        return '⚠️ <strong>236 customers</strong> with $6.1M historical revenue are dormant (12+ months no order). 47 of these are A-tier accounts. Top at-risk: A. Glen Tennis ($340K), A Star Sports ($461K), Multiplex Construction ($281K).';
+    if (/season|month|peak|low/.test(m))
+        return '📅 November is Oxley\'s peak month — <strong>$528K in November 2025</strong>. Q4 (Oct–Dec) is the strongest quarter. H1 tends to be slow, especially April–June. Use slow periods for proactive quote follow-up.';
+    return '🤔 That\'s a great question! I can help with revenue analysis, customer insights, renewal opportunities, the quote pipeline, product performance, and seasonal trends. Try asking about any of these topics — full AI integration is coming soon.';
+}
+
+window.sendAIMessage = function() {
+    const input = document.getElementById('ai-input');
+    const messages = document.getElementById('ai-messages');
+    const text = input.value.trim();
+    if (!text) return;
+
+    // Add user message
+    const userMsg = document.createElement('div');
+    userMsg.className = 'ai-msg user';
+    userMsg.textContent = text;
+    messages.appendChild(userMsg);
+    input.value = '';
+
+    // Typing indicator
+    const typing = document.createElement('div');
+    typing.className = 'ai-msg bot';
+    typing.innerHTML = '<em style="color:#64748b;">Thinking…</em>';
+    messages.appendChild(typing);
+    messages.scrollTop = messages.scrollHeight;
+
+    // Respond after brief delay
+    setTimeout(() => {
+        typing.innerHTML = getAIResponse(text);
+        messages.scrollTop = messages.scrollHeight;
+    }, 600);
+};
+
+// ── Customer detail modals ───────────────────────────────────────
+window._custModalStore = [];
+
+window.openCustModal = function(i) {
+    const d = window._custModalStore[i];
+    if (!d) return;
+    openModal(d.title, d.body);
+};
+
+// ── Export utilities ─────────────────────────────────────────────
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+window.copyTable = function(tableId) {
+    const table = document.getElementById(tableId);
+    if (!table) return;
+    const rows = table.closest('table').querySelectorAll('tr');
+    const lines = Array.from(rows).map(r =>
+        Array.from(r.querySelectorAll('th,td')).map(c => c.innerText.trim()).join('\t')
+    );
+    navigator.clipboard.writeText(lines.join('\n')).then(() => showToast('✓ Copied to clipboard'));
+};
+
+window.downloadCSV = function(tableId, filename) {
+    const table = document.getElementById(tableId);
+    if (!table) return;
+    const rows = table.closest('table').querySelectorAll('tr');
+    const csv = Array.from(rows).map(r =>
+        Array.from(r.querySelectorAll('th,td')).map(c => {
+            const v = c.innerText.trim().replace(/"/g, '""');
+            return /,|\n|"/.test(v) ? `"${v}"` : v;
+        }).join(',')
+    ).join('\n');
+    const a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+    a.download = filename;
+    a.click();
+};
+
 // ── Deferred startup — runs after ALL chartInitFns are registered ──
 (function startApp() {
     const hash = location.hash.slice(1);
@@ -2613,8 +2948,30 @@ chartInitFns['forecast'] = function initForecastCharts() {
 })();
 </script>
 
+<div id="toast"></div>
+
+<!-- ══ AI Chat Sidebar ═══════════════════════════════════════════ -->
+<div id="ai-overlay" onclick="toggleAISidebar()"></div>
+<button id="ai-fab" onclick="toggleAISidebar()">💬 Ask Oxley AI</button>
+<div id="ai-sidebar">
+    <div class="ai-header">
+        <div>
+            <div class="ai-header-title">🤖 Oxley AI Assistant</div>
+            <div class="ai-header-sub">Ask questions about your business data</div>
+        </div>
+        <button class="ai-close" onclick="toggleAISidebar()">✕</button>
+    </div>
+    <div id="ai-messages">
+        <div class="ai-msg bot">👋 Hi! I'm Oxley AI. Ask me about revenue, customers, renewals, quotes, or products. <br><br><em style="color:#64748b;font-size:11px;">Note: This is currently a preview with pre-loaded insights. Full AI integration coming soon.</em></div>
+    </div>
+    <div class="ai-input-row">
+        <input id="ai-input" type="text" placeholder="Ask about revenue, customers, renewals…" onkeydown="if(event.key==='Enter')sendAIMessage()">
+        <button id="ai-send" onclick="sendAIMessage()">Send</button>
+    </div>
+</div>
+
 <footer class="app-footer">
-    <strong>Version 1.0</strong>
+    <strong>Version 1.1</strong>
     <span>&nbsp;&bull;&nbsp;</span>
     Built by <strong>VirtualWorxs / Incredible Projects</strong>
     <span>&nbsp;&bull;&nbsp;</span>
