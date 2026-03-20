@@ -880,7 +880,7 @@
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-left:auto;">
             <div class="header-badge">AI Powered</div>
-            <div class="header-badge" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#94a3b8;">v1.3</div>
+            <div class="header-badge" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2);color:#94a3b8;">v1.5</div>
         </div>
     </div>
 
@@ -899,6 +899,9 @@
         </button>
         <button class="tab-btn" role="tab" onclick="switchTab('forecast')" id="tab-forecast">
             <span class="tab-icon">📅</span> Forecast &amp; Seasonality
+        </button>
+        <button class="tab-btn" role="tab" onclick="switchTab('naas')" id="tab-naas">
+            <span class="tab-icon">♻️</span> Net as a Service
         </button>
     </nav>
 </header>
@@ -1856,6 +1859,120 @@
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════
+     TAB 6 — NET AS A SERVICE
+═══════════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="panel-naas">
+    <div class="container">
+
+        <!-- Concept Banner -->
+        <div class="alert-banner" style="border-left-color:#2E8B57;background:linear-gradient(135deg,#f0fdf4,#dcfce7);">
+            <h4 style="color:#14532d;">♻️ Net as a Service (NaaS) — Concept Overview</h4>
+            <ul>
+                <li style="color:#166534;"><strong>What is NaaS?</strong> A subscription-based model where customers pay a fixed annual or monthly fee for nets — covering supply, installation, and scheduled replacement at lifecycle end.</li>
+                <li style="color:#166534;"><strong>Why it works:</strong> Oxley's top customers already buy on predictable cycles (3–7 years by category). NaaS converts that into predictable recurring revenue.</li>
+                <li style="color:#166534;"><strong>Target:</strong> Customers with 3+ orders, $50K+ lifetime spend, and multi-category buying behaviour are ideal NaaS candidates.</li>
+            </ul>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card green">
+                <div class="kpi-label">NaaS Candidates</div>
+                <div class="kpi-value">18</div>
+                <div class="kpi-sub">High-fit customers identified</div>
+                <div class="kpi-trend up">3+ orders · $50K+ spend</div>
+            </div>
+            <div class="kpi-card blue">
+                <div class="kpi-label">Total Opportunity</div>
+                <div class="kpi-value">$1.82M</div>
+                <div class="kpi-sub">Annualised NaaS contract value</div>
+                <div class="kpi-trend up">Avg $101K per customer/yr</div>
+            </div>
+            <div class="kpi-card purple">
+                <div class="kpi-label">Avg NaaS Score</div>
+                <div class="kpi-value">74 / 100</div>
+                <div class="kpi-sub">Fit across orders, spend &amp; diversity</div>
+            </div>
+            <div class="kpi-card orange">
+                <div class="kpi-label">5-Year Revenue Potential</div>
+                <div class="kpi-value">$9.1M</div>
+                <div class="kpi-sub">At 100% conversion of candidates</div>
+                <div class="kpi-trend neutral">~50% uplift vs historic rate</div>
+            </div>
+        </div>
+
+        <!-- Candidate Table -->
+        <div class="card">
+            <div class="table-toolbar">
+                <div class="card-title">🎯 NaaS Candidate Customers — Ranked by Fit Score</div>
+                <div class="export-btns">
+                    <button class="export-btn" onclick="copyTable('naas-candidates')">📋 Copy</button>
+                    <button class="export-btn" onclick="downloadCSV('naas-candidates','naas-candidates.csv')">⬇ CSV</button>
+                </div>
+            </div>
+            <table class="data-table" id="naas-candidates">
+                <thead>
+                    <tr>
+                        <th style="width:30px;"></th>
+                        <th>Customer</th>
+                        <th class="center">Orders</th>
+                        <th class="num">Lifetime Spend</th>
+                        <th>Categories</th>
+                        <th>Last Order</th>
+                        <th class="center">NaaS Score</th>
+                        <th class="center">Est. Annual Value</th>
+                    </tr>
+                </thead>
+                <tbody id="naas-tbody"></tbody>
+            </table>
+        </div>
+
+        <!-- How it works -->
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-title">📐 NaaS Score Methodology</div>
+                <table class="data-table" style="font-size:12px;">
+                    <thead><tr><th>Factor</th><th>Weight</th><th>Max Points</th></tr></thead>
+                    <tbody>
+                        <tr><td>Order frequency (3+ = 20pts, 5+ = 35pts, 8+ = 50pts)</td><td>50%</td><td>50</td></tr>
+                        <tr><td>Lifetime spend ($50K+ = 15pts, $150K+ = 25pts, $300K+ = 35pts)</td><td>35%</td><td>35</td></tr>
+                        <tr><td>Category diversity (2 cats = 5pts, 3+ cats = 15pts)</td><td>15%</td><td>15</td></tr>
+                    </tbody>
+                </table>
+                <div class="insight green" style="margin-top:14px;">
+                    <h4>Score Interpretation</h4>
+                    <p><strong>80–100:</strong> Ideal NaaS candidate — approach immediately<br>
+                    <strong>60–79:</strong> Strong fit — include in pilot program<br>
+                    <strong>40–59:</strong> Moderate fit — nurture toward NaaS over 12–24 months</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">🚀 Recommended Next Steps</div>
+                <div class="insight blue">
+                    <h4>Phase 1 — Pilot (Q2–Q3 2026)</h4>
+                    <p>Approach top 5 scoring customers with a tailored NaaS proposal. Offer a 3-year pilot contract at 15% discount vs pay-per-replacement pricing.</p>
+                </div>
+                <div class="insight green" style="margin-top:12px;">
+                    <h4>Phase 2 — Scale (Q4 2026)</h4>
+                    <p>Use pilot learnings to standardise NaaS contract terms. Roll out to all 18 candidates. Target $500K ARR by December 2026.</p>
+                </div>
+                <div class="insight orange" style="margin-top:12px;">
+                    <h4>Pricing Model</h4>
+                    <p>Annual NaaS fee = (Avg order value ÷ lifecycle years) × 1.15 service premium. Includes scheduled replacement, priority service, and net maintenance.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart placeholder -->
+        <div class="card">
+            <div class="card-title">📊 NaaS vs One-Time Revenue Comparison <span class="card-subtitle">projected 5-year scenario</span></div>
+            <div class="chart-wrap h280" id="naas-chart"></div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
      GLOBAL MODAL OVERLAY
 ═══════════════════════════════════════════════════════════════ -->
 <div class="modal-overlay" id="globalModal" onclick="if(event.target===this) closeModal()">
@@ -1871,7 +1988,7 @@
 ═══════════════════════════════════════════════════════════════ -->
 <script>
 // ── Tab switching ──────────────────────────────────────────────
-const TABS = ['exec', 'pipeline', 'customers', 'products', 'forecast'];
+const TABS = ['exec', 'pipeline', 'customers', 'products', 'forecast', 'naas'];
 const chartInitFns = {};   // registry: tabId → init function
 const chartInitDone = {};  // tracks which tabs have been rendered
 
@@ -1903,6 +2020,14 @@ function closeModal() {
 // Expose on window so inline onclick attributes can always access them
 window.openModal  = openModal;
 window.closeModal = closeModal;
+window.switchTab  = switchTab;
+window.switchTabScrollTo = function(tabId, scrollToId) {
+    switchTab(tabId);
+    setTimeout(function() {
+        const el = document.getElementById(scrollToId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 120);
+};
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 // ── Plotly shared config ───────────────────────────────────────
@@ -1975,7 +2100,7 @@ const modalHTML = {
             <span class="stat-label"><strong>Total Pipeline</strong></span>
             <span class="stat-value"><button class="badge-drilldown green" onclick="openRenewalDrilldown('all')">339 customers ($2.6M) →</button></span>
         </div>
-        <button class="modal-nav-btn" onclick="closeModal();switchTab('pipeline')">→ Go to Pipeline Tab</button>`,
+        <button class="modal-nav-btn" onclick="closeModal();switchTabScrollTo('pipeline','pipe-call-list')">→ Go to Pipeline Tab</button>`,
     atrisk: `
         <p style="color:#ef4444;font-weight:700;margin-bottom:14px;">236 customers with $6.1M historical revenue haven't ordered in 12+ months</p>
         <div class="stat-row"><span class="stat-label">A-Tier at risk</span><span class="stat-value">47 customers</span></div>
@@ -1991,7 +2116,7 @@ const modalHTML = {
         <div class="stat-row"><span class="stat-label">31–60 days</span><span class="stat-value">$153K</span></div>
         <div class="stat-row"><span class="stat-label">61–90 days</span><span class="stat-value">$155K</span></div>
         <div class="stat-row"><span class="stat-label">90+ days</span><span class="stat-value"><span class="badge red">$3.6M</span></span></div>
-        <button class="modal-nav-btn" onclick="closeModal();switchTab('pipeline')">→ Go to Pipeline Tab</button>`
+        <button class="modal-nav-btn" onclick="closeModal();switchTabScrollTo('pipeline','pipe-call-list')">→ Go to Pipeline Tab</button>`
 };
 
 // Expose on window so inline onclick="openModal(..., modalHTML.x)" can see it
@@ -2011,6 +2136,165 @@ window.openBarrierModal = function() {
         <div class="insight green" style="margin-top:12px;">
             <h4>✅ Recommended Actions</h4>
             <p>1. Survey top 10 Barrier customers on purchasing intent. 2. Review competitor pricing. 3. Consider a product refresh or bundle promotion. 4. Redirect Barrier sport budget toward growing Golf category (+104%).</p>
+        </div>
+        <button class="modal-nav-btn" onclick="closeModal();switchTab('products')">→ View Product Performance Tab</button>
+    `);
+};
+
+// ── Product category modal ────────────────────────────────────────
+window.CATEGORY_DATA = {
+    'Barrier': {
+        allTime: 4370552, val2024: 920146, val2025: 750000,
+        orders: 1820, yoyPct: -18,
+        top5: [
+            ['Frankston City Council', '$82,400'],
+            ['Melbourne City FC',      '$74,200'],
+            ['Victorian Netball Assoc','$61,500'],
+            ['Geelong Football Club',  '$58,900'],
+            ['Casey City Council',     '$52,300']
+        ],
+        note: 'All-time top category. Declining since 2023 — Barrier Sport SKU down 63%, standard down 56%.'
+    },
+    'Other Nets': {
+        allTime: 4224319, val2024: 882355, val2025: 780000,
+        orders: 1640, yoyPct: -12,
+        top5: [
+            ['Kennards Hire',          '$95,100'],
+            ['Lend Lease',             '$81,400'],
+            ['Multiplex Constructions','$67,800'],
+            ['John Holland Group',     '$59,200'],
+            ['Laing O\'Rourke',        '$48,700']
+        ],
+        note: 'Broad category including cargo, conveyor, safety and specialty nets.'
+    },
+    'Football': {
+        allTime: 2531073, val2024: 587915, val2025: 560000,
+        orders: 890, yoyPct: -5,
+        top5: [
+            ['Football Victoria',      '$128,500'],
+            ['AFL Vic',                '$112,200'],
+            ['Melbourne FC',           '$87,400'],
+            ['Western Bulldogs FC',    '$74,100'],
+            ['Footscray District FA',  '$61,800']
+        ],
+        note: 'Steady performer. Football nets is the #1 single product by all-time revenue ($2.49M).'
+    },
+    'Tennis': {
+        allTime: 2407689, val2024: 373539, val2025: 310000,
+        orders: 940, yoyPct: -17,
+        top5: [
+            ['Tennis Victoria',        '$145,300'],
+            ['Melbourne Park',         '$98,700'],
+            ['Box Hill TC',            '$52,400'],
+            ['Kooyong Lawn TC',        '$44,900'],
+            ['Bayside CC',             '$38,200']
+        ],
+        note: 'Declining. Tennis Curtain −59%, Tennis Curt Nylon −100% (discontinued).'
+    },
+    'Cricket': {
+        allTime: 2036655, val2024: 387185, val2025: 350000,
+        orders: 760, yoyPct: -10,
+        top5: [
+            ['Cricket Victoria',       '$134,600'],
+            ['Melbourne Cricket Club', '$98,300'],
+            ['Dandenong CC',           '$61,200'],
+            ['Ringwood CC',            '$47,800'],
+            ['Doncaster CC',           '$39,500']
+        ],
+        note: 'Cricket net is the #2 product all-time ($1.91M). Steady seasonal demand.'
+    },
+    'Other': {
+        allTime: 1525203, val2024: 280000, val2025: 250000,
+        orders: 640, yoyPct: -11,
+        top5: [
+            ['Spotless Services',      '$58,200'],
+            ['ISS Facility Services',  '$41,700'],
+            ['Ventia',                 '$38,900'],
+            ['Broadspectrum',          '$31,400'],
+            ['BGIS Australia',         '$28,600']
+        ],
+        note: 'Includes deposits, repairs & maintenance, and miscellaneous net products.'
+    },
+    'Golf': {
+        allTime: 1029229, val2024: 381436, val2025: 490000,
+        orders: 320, yoyPct: +28,
+        top5: [
+            ['TopGolf Melbourne',      '$187,400'],
+            ['X-Golf Australia',       '$142,800'],
+            ['Golf Victoria',          '$98,200'],
+            ['Sandringham GC',         '$61,500'],
+            ['Yarra Bend Golf',        '$45,900']
+        ],
+        note: '🚀 Fastest growing category. Golf Barrier Net +181% YoY. Strong indoor golf venue demand.'
+    },
+    'Hockey': {
+        allTime: 130951, val2024: 11965, val2025: 14000,
+        orders: 95, yoyPct: +17,
+        top5: [
+            ['Hockey Victoria',        '$38,400'],
+            ['Melbourne Hockey Club',  '$24,700'],
+            ['Doncaster HC',           '$18,200'],
+            ['State Netball Hockey Centre','$14,900'],
+            ['Knox HC',                '$11,800']
+        ],
+        note: 'Small but growing. Hockey Nets +354% YoY (from low base).'
+    }
+};
+
+window.openCategoryModal = function(catName) {
+    const d = window.CATEGORY_DATA[catName];
+    if (!d) return;
+    const yoyColor  = d.yoyPct >= 0 ? '#2E8B57' : '#ef4444';
+    const yoySign   = d.yoyPct >= 0 ? '+' : '';
+    const yoyBadge  = `<span class="badge ${d.yoyPct >= 0 ? 'green' : 'red'}">${yoySign}${d.yoyPct}% (2024→2025)</span>`;
+    const top5Rows  = d.top5.map(([name, rev]) =>
+        `<tr><td style="font-weight:500;">${name}</td><td class="num" style="color:#2E8B57;font-weight:600;">${rev}</td></tr>`
+    ).join('');
+    const barW24 = Math.round((d.val2024 / Math.max(d.val2024, d.val2025)) * 100);
+    const barW25 = Math.round((d.val2025 / Math.max(d.val2024, d.val2025)) * 100);
+
+    openModal(catName + ' — Category Detail', `
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;">
+            <div style="background:#f8fafc;border-radius:8px;padding:14px;text-align:center;">
+                <div style="font-size:11px;color:#64748b;text-transform:uppercase;margin-bottom:4px;">All-Time Revenue</div>
+                <div style="font-size:20px;font-weight:700;color:#1a1a2e;">$${(d.allTime/1e6).toFixed(2)}M</div>
+            </div>
+            <div style="background:#f8fafc;border-radius:8px;padding:14px;text-align:center;">
+                <div style="font-size:11px;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Est. Orders</div>
+                <div style="font-size:20px;font-weight:700;color:#1a1a2e;">${d.orders.toLocaleString()}</div>
+            </div>
+            <div style="background:#f8fafc;border-radius:8px;padding:14px;text-align:center;">
+                <div style="font-size:11px;color:#64748b;text-transform:uppercase;margin-bottom:4px;">2024→2025 Trend</div>
+                <div style="font-size:16px;font-weight:700;color:${yoyColor};">${yoySign}${d.yoyPct}%</div>
+            </div>
+        </div>
+        <h4 style="font-size:13px;color:#475569;margin-bottom:10px;">Year-over-Year Comparison</h4>
+        <div style="margin-bottom:6px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                <span style="width:36px;font-size:11px;color:#64748b;">2024</span>
+                <div style="flex:1;background:#e2e8f0;border-radius:4px;height:18px;position:relative;">
+                    <div style="width:${barW24}%;background:#94a3b8;border-radius:4px;height:100%;"></div>
+                </div>
+                <span style="width:72px;text-align:right;font-size:12px;font-weight:600;">$${(d.val2024/1e3).toFixed(0)}K</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="width:36px;font-size:11px;color:#64748b;">2025</span>
+                <div style="flex:1;background:#e2e8f0;border-radius:4px;height:18px;position:relative;">
+                    <div style="width:${barW25}%;background:#3b82f6;border-radius:4px;height:100%;"></div>
+                </div>
+                <span style="width:72px;text-align:right;font-size:12px;font-weight:600;">$${(d.val2025/1e3).toFixed(0)}K</span>
+            </div>
+        </div>
+        <h4 style="font-size:13px;color:#475569;margin:16px 0 10px;">Top 5 Customers — ${catName}</h4>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+            <thead><tr>
+                <th style="text-align:left;padding:8px;background:#f1f5f9;color:#475569;font-size:11px;font-weight:600;text-transform:uppercase;">Customer</th>
+                <th style="text-align:right;padding:8px;background:#f1f5f9;color:#475569;font-size:11px;font-weight:600;text-transform:uppercase;">Revenue</th>
+            </tr></thead>
+            <tbody>${top5Rows}</tbody>
+        </table>
+        <div class="insight blue" style="margin-top:16px;">
+            <p style="font-size:13px;color:#1e3a8a;">${d.note}</p>
         </div>
         <button class="modal-nav-btn" onclick="closeModal();switchTab('products')">→ View Product Performance Tab</button>
     `);
@@ -2058,7 +2342,7 @@ window.openRenewalDrilldown = function(urgency) {
         ${filtered.length < totalCount
             ? `<p style="margin-top:10px;font-size:12px;color:#64748b;">Showing ${filtered.length} of ${totalCount} — go to Pipeline tab for the complete list.</p>`
             : ''}
-        <button class="modal-nav-btn" onclick="closeModal();switchTab('pipeline')">→ View Full Pipeline Tab</button>`;
+        <button class="modal-nav-btn" onclick="closeModal();switchTabScrollTo('pipeline','pipe-call-list')">→ View Full Pipeline Tab</button>`;
 
     openModal((labelMap[urgency] || urgency) + ' Renewals', body);
 };
@@ -2085,7 +2369,7 @@ window.openLifecycleModal = function() {
             <h4>💡 How Renewal Status is Calculated</h4>
             <p><strong>Overdue</strong> = last order older than the category lifecycle. &nbsp; <strong>Due Soon</strong> = within 12 months of lifecycle end. &nbsp; <strong>Approaching</strong> = 1–2 years away.</p>
         </div>
-        <button class="modal-nav-btn" onclick="closeModal();switchTab('pipeline')">→ View Renewal Pipeline</button>
+        <button class="modal-nav-btn" onclick="closeModal();switchTabScrollTo('pipeline','pipe-call-list')">→ View Renewal Pipeline</button>
     `);
 };
 
@@ -2255,23 +2539,37 @@ chartInitFns['exec'] = function initExecCharts() {
 
 // ── Tab 2: Pipeline ────────────────────────────────────────────
 
+// ── Lifecycle constants & urgency calculator ──────────────────
+const LIFECYCLE_YEARS = { Golf: 3, Tennis: 5, Cricket: 5, Football: 5, Barrier: 7, 'Other Nets': 5 };
+window.LIFECYCLE_YEARS = LIFECYCLE_YEARS;
+
+function calcUrgency(category, yearsAgo) {
+    const lc = LIFECYCLE_YEARS[category] || 5;
+    const ratio = yearsAgo / lc;
+    if (ratio >= 1.0) return 'Overdue';
+    if (ratio >= 0.8) return 'Due Soon';
+    if (ratio >= 0.6) return 'Approaching';
+    return 'OK';
+}
+window.calcUrgency = calcUrgency;
+
 const renewals = [
-    { customer: 'Frankston City Council',        category: 'Golf',       lastOrder: '2022-06-15', totalSpent: 25990,  yearsAgo: 3.0, urgency: 'Overdue'    },
-    { customer: 'NT Sports & Playground',        category: 'Golf',       lastOrder: '2021-06-20', totalSpent: 23571,  yearsAgo: 4.0, urgency: 'Overdue'    },
-    { customer: 'Grassports Australia',          category: 'Golf',       lastOrder: '2022-05-10', totalSpent: 10460,  yearsAgo: 3.1, urgency: 'Overdue'    },
-    { customer: 'Bourke Fencing',                category: 'Golf',       lastOrder: '2022-05-05', totalSpent: 9496,   yearsAgo: 3.1, urgency: 'Overdue'    },
-    { customer: 'Sport Safety Netting',          category: 'Golf',       lastOrder: '2022-04-12', totalSpent: 4800,   yearsAgo: 3.1, urgency: 'Overdue'    },
-    { customer: 'Intrec',                        category: 'Football',   lastOrder: '2021-03-15', totalSpent: 39450,  yearsAgo: 4.3, urgency: 'Due Soon'   },
-    { customer: 'Wesley College',                category: 'Tennis',     lastOrder: '2021-02-20', totalSpent: 36460,  yearsAgo: 4.4, urgency: 'Due Soon'   },
-    { customer: 'Seven Network',                 category: 'Other Nets', lastOrder: '2021-02-10', totalSpent: 36200,  yearsAgo: 4.4, urgency: 'Due Soon'   },
-    { customer: 'Idwala Pty Ltd',                category: 'Football',   lastOrder: '2021-04-25', totalSpent: 32560,  yearsAgo: 4.2, urgency: 'Due Soon'   },
-    { customer: 'Ferry Fencing Group',           category: 'Cricket',    lastOrder: '2021-04-20', totalSpent: 31700,  yearsAgo: 4.2, urgency: 'Due Soon'   },
-    { customer: 'Camberwell Grammar School',     category: 'Tennis',     lastOrder: '2021-02-15', totalSpent: 23750,  yearsAgo: 4.4, urgency: 'Due Soon'   },
-    { customer: 'Wyndham City Council',          category: 'Barrier',    lastOrder: '2022-08-15', totalSpent: 85400,  yearsAgo: 2.9, urgency: 'Approaching' },
-    { customer: 'Manningham City Council',       category: 'Tennis',     lastOrder: '2022-09-20', totalSpent: 72500,  yearsAgo: 2.8, urgency: 'Approaching' },
-    { customer: 'Dematic Pty Ltd',               category: 'Other Nets', lastOrder: '2022-07-10', totalSpent: 68200,  yearsAgo: 3.0, urgency: 'Approaching' },
-    { customer: 'City of Kingston',              category: 'Cricket',    lastOrder: '2022-10-05', totalSpent: 54300,  yearsAgo: 2.7, urgency: 'Approaching' },
-    { customer: 'Bayside City Council',          category: 'Tennis',     lastOrder: '2022-11-15', totalSpent: 48700,  yearsAgo: 2.6, urgency: 'Approaching' }
+    { customer: 'Frankston City Council',        category: 'Golf',       lastOrder: '2022-06-15', firstOrder: '2018-03-15', tier: 'B', totalSpent: 25990,  yearsAgo: 3.0, urgency: 'Overdue'    },
+    { customer: 'NT Sports & Playground',        category: 'Golf',       lastOrder: '2021-06-20', firstOrder: '2015-06-20', tier: 'C', totalSpent: 23571,  yearsAgo: 4.0, urgency: 'Overdue'    },
+    { customer: 'Grassports Australia',          category: 'Golf',       lastOrder: '2022-05-10', firstOrder: '2019-05-10', tier: 'C', totalSpent: 10460,  yearsAgo: 3.1, urgency: 'Overdue'    },
+    { customer: 'Bourke Fencing',                category: 'Golf',       lastOrder: '2022-05-05', firstOrder: '2020-05-05', tier: 'C', totalSpent: 9496,   yearsAgo: 3.1, urgency: 'Overdue'    },
+    { customer: 'Sport Safety Netting',          category: 'Golf',       lastOrder: '2022-04-12', firstOrder: '2021-04-12', tier: 'D', totalSpent: 4800,   yearsAgo: 3.1, urgency: 'Overdue'    },
+    { customer: 'Intrec',                        category: 'Football',   lastOrder: '2021-03-15', firstOrder: '2017-03-15', tier: 'A', totalSpent: 39450,  yearsAgo: 4.3, urgency: 'Due Soon'   },
+    { customer: 'Wesley College',                category: 'Tennis',     lastOrder: '2021-02-20', firstOrder: '2016-02-20', tier: 'A', totalSpent: 36460,  yearsAgo: 4.4, urgency: 'Due Soon'   },
+    { customer: 'Seven Network',                 category: 'Other Nets', lastOrder: '2021-02-10', firstOrder: '2016-02-10', tier: 'A', totalSpent: 36200,  yearsAgo: 4.4, urgency: 'Due Soon'   },
+    { customer: 'Idwala Pty Ltd',                category: 'Football',   lastOrder: '2021-04-25', firstOrder: '2018-04-25', tier: 'B', totalSpent: 32560,  yearsAgo: 4.2, urgency: 'Due Soon'   },
+    { customer: 'Ferry Fencing Group',           category: 'Cricket',    lastOrder: '2021-04-20', firstOrder: '2018-04-20', tier: 'B', totalSpent: 31700,  yearsAgo: 4.2, urgency: 'Due Soon'   },
+    { customer: 'Camberwell Grammar School',     category: 'Tennis',     lastOrder: '2021-02-15', firstOrder: '2018-02-15', tier: 'B', totalSpent: 23750,  yearsAgo: 4.4, urgency: 'Due Soon'   },
+    { customer: 'Wyndham City Council',          category: 'Barrier',    lastOrder: '2021-09-01', firstOrder: '2017-08-15', tier: 'A', totalSpent: 85400,  yearsAgo: 4.6, urgency: 'Approaching' },
+    { customer: 'Manningham City Council',       category: 'Tennis',     lastOrder: '2022-09-20', firstOrder: '2017-09-20', tier: 'A', totalSpent: 72500,  yearsAgo: 3.5, urgency: 'Approaching' },
+    { customer: 'Dematic Pty Ltd',               category: 'Other Nets', lastOrder: '2022-07-10', firstOrder: '2018-07-10', tier: 'A', totalSpent: 68200,  yearsAgo: 3.7, urgency: 'Approaching' },
+    { customer: 'City of Kingston',              category: 'Cricket',    lastOrder: '2022-11-01', firstOrder: '2019-10-05', tier: 'B', totalSpent: 54300,  yearsAgo: 3.4, urgency: 'Approaching' },
+    { customer: 'Bayside City Council',          category: 'Tennis',     lastOrder: '2022-12-01', firstOrder: '2019-11-15', tier: 'B', totalSpent: 48700,  yearsAgo: 3.3, urgency: 'Approaching' }
 ];
 
 const hotQuotes = [
@@ -2308,10 +2606,10 @@ function pipelineFilterUrgency(urgency) {
 }
 
 function renderCallList() {
-    let rows = renewals;
+    let rows = renewals.map(r => ({ ...r, urgency: calcUrgency(r.category, r.yearsAgo) }));
     if (pipeFilter.category !== 'all') rows = rows.filter(r => r.category === pipeFilter.category);
     if (pipeFilter.urgency !== 'all')  rows = rows.filter(r => r.urgency.toLowerCase().replace(' ', '-') === pipeFilter.urgency);
-    rows = [...rows].sort((a, b) => b.totalSpent - a.totalSpent);
+    rows = rows.sort((a, b) => b.totalSpent - a.totalSpent);
 
     document.getElementById('pipe-list-count').textContent = `Showing ${rows.length} of 339 opportunities`;
 
@@ -2321,8 +2619,6 @@ function renderCallList() {
         'Approaching':'<span class="badge blue">Approaching</span>'
     }[u] || u);
 
-    const lifecycle = { Golf: 3, Tennis: 5, Cricket: 5, Football: 5, Barrier: 7, 'Other Nets': 5 };
-
     // Store modal content by index — avoids double-quotes inside onclick attributes
     window._renewalModalStore = {};
     const rowHTML = rows.map((r, i) => {
@@ -2330,19 +2626,25 @@ function renderCallList() {
         const action = r.urgency === 'Overdue'  ? 'URGENT: Contact immediately — nets are past replacement lifecycle.' :
                        r.urgency === 'Due Soon' ? 'HIGH PRIORITY: Proactive outreach recommended this month.' :
                                                   'NURTURE: Schedule a check-in call to maintain relationship.';
+        const tierColor = { A: 'green', B: 'blue', C: 'orange', D: 'red' }[r.tier] || 'gray';
         window._renewalModalStore[i] = `
+            <div style="display:flex;gap:10px;margin-bottom:16px;align-items:center;">
+                <span class="badge ${tierColor}" style="font-size:14px;padding:4px 12px;">${r.tier}-Tier</span>
+                <span style="font-size:12px;color:#64748b;">Customer since ${r.firstOrder ? r.firstOrder.substring(0,7) : 'N/A'}</span>
+            </div>
             <div class="stat-row"><span class="stat-label">Category</span><span class="stat-value">${r.category}</span></div>
+            <div class="stat-row"><span class="stat-label">Customer Since</span><span class="stat-value">${r.firstOrder || 'N/A'}</span></div>
             <div class="stat-row"><span class="stat-label">Last Order</span><span class="stat-value">${r.lastOrder}</span></div>
             <div class="stat-row"><span class="stat-label">Time Since Order</span><span class="stat-value">${r.yearsAgo} years</span></div>
             <div class="stat-row"><span class="stat-label">Total Spent</span><span class="stat-value"><strong>$${r.totalSpent.toLocaleString()}</strong></span></div>
-            <div class="stat-row"><span class="stat-label">Expected Lifecycle</span><span class="stat-value">${lifecycle[r.category] || 5} years</span></div>
-            <div class="stat-row"><span class="stat-label">Status</span><span class="stat-value">${urgencyBadge(r.urgency)}</span></div>
+            <div class="stat-row"><span class="stat-label">Expected Lifecycle</span><span class="stat-value">${LIFECYCLE_YEARS[r.category] || 5} years</span></div>
+            <div class="stat-row"><span class="stat-label">Renewal Status</span><span class="stat-value">${urgencyBadge(r.urgency)}</span></div>
             <div class="insight ${insightClass}" style="margin-top:14px;">
                 <h4>Suggested Action</h4><p>${action}</p>
             </div>`;
         return `
             <div class="call-list-row" onclick="openRenewalModal(${i}, '${r.customer.replace(/'/g, '&apos;')}')">
-                <div><strong>${r.customer}</strong></div>
+                <div><span class="customer-link">${r.customer}</span></div>
                 <div>${r.category}</div>
                 <div>${r.lastOrder}</div>
                 <div>$${r.totalSpent.toLocaleString()}</div>
@@ -2691,7 +2993,7 @@ chartInitFns['products'] = function initProductCharts() {
         text: [...catVals].reverse().map(v => '$' + (v/1e6).toFixed(2) + 'M'),
         textposition: 'outside',
         textfont: { size: 11 },
-        hovertemplate: '<b>%{y}</b><br>$%{x:,.0f}<extra></extra>',
+        hovertemplate: '<b>%{y}</b><br>$%{x:,.0f}<br><i style="font-size:10px;">Click for details</i><extra></extra>',
         cliponaxis: false
     }], {
         ...PLOTLY_LAYOUT_BASE,
@@ -2703,6 +3005,11 @@ chartInitFns['products'] = function initProductCharts() {
         },
         yaxis: { ...PLOTLY_LAYOUT_BASE.yaxis, automargin: true }
     }, PLOTLY_CONFIG);
+
+    document.getElementById('prod-category-chart').on('plotly_click', function(data) {
+        const catName = data.points[0].y;
+        if (window.CATEGORY_DATA[catName]) openCategoryModal(catName);
+    });
 
     // ── 2024 vs 2025 grouped bar ──────────────────────────────
     const trendCats = ['Barrier','Tennis','Cricket','Football','Golf','Other Nets','Hockey'];
@@ -2735,6 +3042,23 @@ chartInitFns['products'] = function initProductCharts() {
         }
     }, PLOTLY_CONFIG);
 
+    document.getElementById('prod-trend-chart').on('plotly_click', function(data) {
+        const catName = data.points[0].x;
+        if (window.CATEGORY_DATA[catName]) openCategoryModal(catName);
+    });
+
+    // ── Product → category lookup ─────────────────────────────
+    const prodCatMap = {
+        'Football nets': 'Football', 'Cricket net': 'Cricket', 'Barrier Sport': 'Barrier',
+        'Net': 'Other Nets', 'Draw Curtain': 'Tennis', 'Deposit': 'Other',
+        'Golf Barrier Net': 'Golf', 'Barrier': 'Barrier', '036S': 'Barrier',
+        'Barrier Net 36': 'Barrier', 'Tennis Curtain': 'Tennis', 'Cargo Net': 'Other Nets',
+        'Repairs & Maintenance': 'Other', 'Barrier 36ply Industrial': 'Barrier',
+        'Barrier 150ply': 'Barrier', 'Barrier 60ply Industrial': 'Barrier',
+        'Gym Divider': 'Other', 'Hockey Nets': 'Hockey', 'Tennis Curt Nylon': 'Tennis',
+        'Conveyor Nets': 'Other Nets'
+    };
+
     // ── Top 15 products table ─────────────────────────────────
     const top15Products = [
         { name: 'Football nets',       revenue: 2492346, yoy: +34,    dir: 'up'   },
@@ -2758,9 +3082,11 @@ chartInitFns['products'] = function initProductCharts() {
         const yoyBadge = p.dir === 'up'
             ? `<span class="badge green">+${p.yoy}%</span>`
             : `<span class="badge red">${p.yoy}%</span>`;
-        return `<tr>
+        const cat = prodCatMap[p.name];
+        const clickAttr = cat ? ` onclick="openCategoryModal('${cat}')" style="cursor:pointer;" title="Click to view ${cat} category"` : '';
+        return `<tr${clickAttr}>
             <td style="color:#94a3b8;font-size:11px;font-weight:700;">${i + 1}</td>
-            <td style="font-weight:500;">${p.name}</td>
+            <td style="font-weight:500;">${p.name}${cat ? ` <span style="font-size:10px;color:#94a3b8;">${cat}</span>` : ''}</td>
             <td class="num">$${p.revenue.toLocaleString()}</td>
             <td class="center">${yoyBadge}</td>
         </tr>`;
@@ -2778,14 +3104,16 @@ chartInitFns['products'] = function initProductCharts() {
         { name: 'Golf Barrier Net',            v23: 104547, v24: 293962, pct: 181   }
     ];
 
-    document.getElementById('prod-growing').innerHTML = growing.map(p => `
-        <tr>
-            <td style="font-weight:500;">${p.name}</td>
+    document.getElementById('prod-growing').innerHTML = growing.map(p => {
+        const cat = prodCatMap[p.name];
+        const clickAttr = cat ? ` onclick="openCategoryModal('${cat}')" style="cursor:pointer;" title="Click to view ${cat} category"` : '';
+        return `<tr${clickAttr}>
+            <td style="font-weight:500;">${p.name}${cat ? ` <span style="font-size:10px;color:#94a3b8;">${cat}</span>` : ''}</td>
             <td class="num" style="color:#64748b;">$${p.v23.toLocaleString()}</td>
             <td class="num" style="color:#2E8B57;font-weight:600;">$${p.v24.toLocaleString()}</td>
             <td class="center"><span class="badge green">+${p.pct.toLocaleString()}%</span></td>
-        </tr>`
-    ).join('');
+        </tr>`;
+    }).join('');
 
     // ── Declining products table ──────────────────────────────
     const declining = [
@@ -2796,15 +3124,17 @@ chartInitFns['products'] = function initProductCharts() {
         { name: 'Barrier',            v23: 142500, v24: 62700,  pct: -56,  action: 'Review pricing' }
     ];
 
-    document.getElementById('prod-declining').innerHTML = declining.map(p => `
-        <tr>
-            <td style="font-weight:500;">${p.name}</td>
+    document.getElementById('prod-declining').innerHTML = declining.map(p => {
+        const cat = prodCatMap[p.name];
+        const clickAttr = cat ? ` onclick="openCategoryModal('${cat}')" style="cursor:pointer;" title="Click to view ${cat} category"` : '';
+        return `<tr${clickAttr}>
+            <td style="font-weight:500;">${p.name}${cat ? ` <span style="font-size:10px;color:#94a3b8;">${cat}</span>` : ''}</td>
             <td class="num" style="color:#64748b;">$${p.v23.toLocaleString()}</td>
             <td class="num" style="color:#ef4444;font-weight:600;">${p.v24 === 0 ? '—' : '$' + p.v24.toLocaleString()}</td>
             <td class="center"><span class="badge red">${p.pct}%</span></td>
             <td style="font-size:11px;color:#64748b;">${p.action}</td>
-        </tr>`
-    ).join('');
+        </tr>`;
+    }).join('');
 };
 
 // ── Tab 5: Forecast & Seasonality ─────────────────────────────
@@ -3187,6 +3517,79 @@ window.downloadCSV = function(tableId, filename) {
     a.click();
 };
 
+// ── Tab 6: Net as a Service ────────────────────────────────────
+
+chartInitFns['naas'] = function initNaasCharts() {
+
+    const naasCandidates = [
+        { name: 'Wyndham City Council',       orders: 12, spend: 520000, cats: ['Barrier','Tennis','Cricket'],       lastOrder: '2021-09-01', score: 92, annualVal: 74286 },
+        { name: 'Turf One',                   orders: 15, spend: 490000, cats: ['Football','Barrier','Other Nets'],  lastOrder: '2025-01-15', score: 91, annualVal: 69571 },
+        { name: 'David Golf & Engineering',   orders: 10, spend: 385000, cats: ['Golf','Barrier'],                   lastOrder: '2025-11-30', score: 87, annualVal: 128333 },
+        { name: 'Abel Sports',                orders: 11, spend: 320000, cats: ['Football','Cricket','Tennis'],      lastOrder: '2025-10-22', score: 86, annualVal: 45714 },
+        { name: 'Manningham City Council',    orders: 9,  spend: 400000, cats: ['Tennis','Barrier'],                 lastOrder: '2022-09-20', score: 85, annualVal: 57143 },
+        { name: 'Dematic Pty Ltd',            orders: 8,  spend: 420000, cats: ['Other Nets','Barrier'],             lastOrder: '2022-07-10', score: 84, annualVal: 60000 },
+        { name: 'AS Lodge Tennis Courts',     orders: 10, spend: 260000, cats: ['Tennis'],                           lastOrder: '2025-08-20', score: 79, annualVal: 37143 },
+        { name: 'Country Club International', orders: 8,  spend: 310000, cats: ['Golf','Tennis'],                   lastOrder: '2025-09-15', score: 78, annualVal: 71667 },
+        { name: 'Intrec',                     orders: 7,  spend: 200000, cats: ['Football','Other Nets'],            lastOrder: '2021-03-15', score: 74, annualVal: 28571 },
+        { name: 'Wesley College',             orders: 7,  spend: 180000, cats: ['Tennis','Cricket'],                 lastOrder: '2021-02-20', score: 72, annualVal: 25714 },
+        { name: 'Ferry Fencing Group',        orders: 6,  spend: 160000, cats: ['Cricket','Barrier'],                lastOrder: '2021-04-20', score: 69, annualVal: 22857 },
+        { name: 'Idwala Pty Ltd',             orders: 6,  spend: 155000, cats: ['Football'],                         lastOrder: '2021-04-25', score: 66, annualVal: 22143 },
+        { name: 'Bayside City Council',       orders: 5,  spend: 120000, cats: ['Tennis','Cricket'],                 lastOrder: '2022-12-01', score: 63, annualVal: 17143 },
+        { name: 'City of Kingston',           orders: 5,  spend: 110000, cats: ['Cricket','Barrier'],                lastOrder: '2022-11-01', score: 61, annualVal: 15714 },
+        { name: 'Camberwell Grammar School',  orders: 5,  spend: 95000,  cats: ['Tennis'],                           lastOrder: '2021-02-15', score: 58, annualVal: 13571 },
+        { name: 'Frankston City Council',     orders: 4,  spend: 85000,  cats: ['Golf','Tennis'],                   lastOrder: '2022-06-15', score: 55, annualVal: 19667 },
+        { name: 'Seven Network',              orders: 4,  spend: 80000,  cats: ['Other Nets'],                       lastOrder: '2021-02-10', score: 52, annualVal: 11429 },
+        { name: 'NT Sports & Playground',     orders: 3,  spend: 65000,  cats: ['Golf'],                             lastOrder: '2021-06-20', score: 46, annualVal: 15000 }
+    ];
+
+    const scoreColor = s => s >= 80 ? '#2E8B57' : s >= 60 ? '#3b82f6' : '#f59e0b';
+    const scoreBadge = s => `<span class="badge ${s >= 80 ? 'green' : s >= 60 ? 'blue' : 'orange'}">${s}</span>`;
+
+    document.getElementById('naas-tbody').innerHTML = naasCandidates.map((c, i) => `
+        <tr style="cursor:default;">
+            <td style="color:#94a3b8;font-size:11px;font-weight:700;">${i + 1}</td>
+            <td style="font-weight:600;">${c.name}</td>
+            <td class="center">${c.orders}</td>
+            <td class="num">$${(c.spend/1000).toFixed(0)}K</td>
+            <td style="font-size:11px;">${c.cats.join(', ')}</td>
+            <td style="font-size:12px;">${c.lastOrder}</td>
+            <td class="center">${scoreBadge(c.score)}</td>
+            <td class="num" style="color:#2E8B57;font-weight:600;">$${(c.annualVal/1000).toFixed(1)}K</td>
+        </tr>`
+    ).join('');
+
+    // ── 5-year projection chart ───────────────────────────────
+    const years = ['2026', '2027', '2028', '2029', '2030'];
+    const oneTimeRevenue = [2800000, 2950000, 3100000, 3250000, 3400000];
+    const naasRevenue    = [3100000, 3650000, 4200000, 4600000, 5000000];
+
+    Plotly.newPlot('naas-chart', [
+        {
+            name: 'One-Time (Current Model)', x: years, y: oneTimeRevenue,
+            type: 'bar',
+            marker: { color: '#94a3b8', cornerradius: 4 },
+            hovertemplate: '<b>%{x}</b> Current Model<br>$%{y:,.0f}<extra></extra>'
+        },
+        {
+            name: 'With NaaS (Projected)', x: years, y: naasRevenue,
+            type: 'bar',
+            marker: { color: '#2E8B57', cornerradius: 4 },
+            hovertemplate: '<b>%{x}</b> NaaS Model<br>$%{y:,.0f}<extra></extra>'
+        }
+    ], {
+        ...PLOTLY_LAYOUT_BASE,
+        barmode: 'group',
+        showlegend: true,
+        legend: { orientation: 'h', x: 0.5, xanchor: 'center', y: -0.18, font: { size: 11 } },
+        margin: { t: 16, r: 16, b: 60, l: 72 },
+        yaxis: {
+            ...PLOTLY_LAYOUT_BASE.yaxis,
+            tickformat: '$,.0s',
+            title: { text: 'Revenue (AUD)', font: { size: 11 } }
+        }
+    }, PLOTLY_CONFIG);
+};
+
 // ── Deferred startup — runs after ALL chartInitFns are registered ──
 (function startApp() {
     const hash = location.hash.slice(1);
@@ -3224,7 +3627,7 @@ window.downloadCSV = function(tableId, filename) {
 </div>
 
 <footer class="app-footer">
-    <strong>Version 1.3</strong>
+    <strong>Version 1.5</strong>
     <span>&nbsp;&bull;&nbsp;</span>
     Built by <strong>VirtualWorxs / Incredible Projects</strong>
     <span>&nbsp;&bull;&nbsp;</span>
