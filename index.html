@@ -387,6 +387,19 @@
         .insight p, .insight li { font-size: 12px; color: #374151; line-height: 1.6; }
         .insight ul { padding-left: 18px; }
 
+        /* ── Expandable action rows ──────────────────────────────── */
+        .action-expand-row td { padding: 0 !important; border-bottom: 1px solid #e2e8f0; }
+        .action-expand-inner {
+            max-height: 0; overflow: hidden; transition: max-height 0.25s ease, padding 0.25s ease;
+            padding: 0 16px; font-size: 12px; color: #475569; line-height: 1.5;
+        }
+        .action-expand-row.open .action-expand-inner { max-height: 80px; padding: 10px 16px; }
+        .action-expand-inner strong { color: #2E8B57; font-weight: 700; }
+        .chevron-toggle {
+            cursor: pointer; font-size: 10px; color: #94a3b8; transition: transform 0.25s ease; display: inline-block;
+        }
+        tr.open .chevron-toggle { transform: rotate(90deg); }
+
         /* ── Hero Stat ────────────────────────────────────────────── */
         .hero-stat {
             background: linear-gradient(135deg, #1a1a2e 0%, #2E8B57 100%);
@@ -1017,6 +1030,7 @@
                             <th>Customer</th>
                             <th class="num">Revenue</th>
                             <th class="center">Status</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="exec-top-customers"></tbody>
@@ -2650,7 +2664,6 @@ chartInitFns['exec'] = function initExecCharts() {
     }, PLOTLY_CONFIG);
     // ── Top 10 Customers ─────────────────────────────────────
     const topCustomers = [
-        { name: 'Cash Sale Vic',             revenue: 580000, tier: 'A', status: 'Active',  lastOrder: '2025-12-15', category: 'Retail',      tenure: '5.1 years' },
         { name: 'Wyndham City Council',       revenue: 520000, tier: 'A', status: 'Active',  lastOrder: '2025-11-20', category: 'Government',   tenure: '4.3 years' },
         { name: 'Turf One',                   revenue: 490000, tier: 'A', status: 'At Risk', lastOrder: '2025-01-15', category: 'Sports',       tenure: '5.0 years' },
         { name: 'Dematic Pty Ltd',            revenue: 420000, tier: 'A', status: 'Dormant', lastOrder: '2024-08-10', category: 'Industrial',   tenure: '4.9 years' },
@@ -2669,27 +2682,40 @@ chartInitFns['exec'] = function initExecCharts() {
         'Lost':    '<span class="badge red">Lost</span>'
     }[s] || s);
 
-    document.getElementById('exec-top-customers').innerHTML = topCustomers.map((c, i) => `
-        <tr onclick="openModal('${c.name.replace(/'/g,"\\'")}', \`
-            <div class='stat-row'><span class='stat-label'>Category</span><span class='stat-value'>${c.category}</span></div>
-            <div class='stat-row'><span class='stat-label'>All-Time Revenue</span><span class='stat-value'>$${(c.revenue/1000).toFixed(0)}K</span></div>
-            <div class='stat-row'><span class='stat-label'>Last Order</span><span class='stat-value'>${c.lastOrder}</span></div>
-            <div class='stat-row'><span class='stat-label'>Tenure</span><span class='stat-value'>${c.tenure}</span></div>
-            <div class='stat-row'><span class='stat-label'>Tier</span><span class='stat-value'><span class='badge ${c.tier === "A" ? "green" : "blue"}'>${c.tier}-Tier</span></span></div>
-            <div class='stat-row'><span class='stat-label'>Status</span><span class='stat-value'>${statusBadge(c.status)}</span></div>
-            <div class='insight ${c.status === "Active" ? "green" : c.status === "At Risk" ? "orange" : "red"}' style='margin-top:14px;'>
-                <h4>Suggested Action</h4>
-                <p>${c.status === 'Active' ? 'RETAIN: Schedule quarterly check-in to maintain relationship.' :
-                     c.status === 'At Risk' ? 'NURTURE: Reach out within 7 days to understand needs.' :
-                     'WIN-BACK: Send personalised offer within 48 hours.'}</p>
-            </div>
-        \`)">
+    function showTopCustomer(i) {
+        const c = topCustomers[i];
+        openModal(c.name, `
+            <div class="stat-row"><span class="stat-label">Category</span><span class="stat-value">${c.category}</span></div>
+            <div class="stat-row"><span class="stat-label">All-Time Revenue</span><span class="stat-value">$${(c.revenue/1000).toFixed(0)}K</span></div>
+            <div class="stat-row"><span class="stat-label">Last Order</span><span class="stat-value">${c.lastOrder}</span></div>
+            <div class="stat-row"><span class="stat-label">Tenure</span><span class="stat-value">${c.tenure}</span></div>
+            <div class="stat-row"><span class="stat-label">Tier</span><span class="stat-value"><span class="badge ${c.tier === 'A' ? 'green' : 'blue'}">${c.tier}-Tier</span></span></div>
+            <div class="stat-row"><span class="stat-label">Status</span><span class="stat-value">${statusBadge(c.status)}</span></div>
+        `);
+    }
+    window.showTopCustomer = showTopCustomer;
+
+    function toggleAction(i) {
+        const row = document.getElementById('action-row-' + i);
+        const main = document.getElementById('main-row-' + i);
+        if (row) { row.classList.toggle('open'); main.classList.toggle('open'); }
+    }
+    window.toggleAction = toggleAction;
+
+    document.getElementById('exec-top-customers').innerHTML = topCustomers.map((c, i) => {
+        const action = c.status === 'Active' ? '<strong>RETAIN:</strong> Schedule quarterly check-in to maintain relationship.' :
+                       c.status === 'At Risk' ? '<strong>NURTURE:</strong> Reach out within 7 days to understand needs.' :
+                       '<strong>WIN-BACK:</strong> Send personalised offer within 48 hours.';
+        return `
+        <tr id="main-row-${i}" onclick="showTopCustomer(${i})" style="cursor:pointer;">
             <td style="color:#94a3b8;font-size:11px;font-weight:700;">${i + 1}</td>
             <td style="font-weight:600;">${c.name}</td>
             <td class="num">$${(c.revenue/1000).toFixed(0)}K</td>
             <td class="center">${statusBadge(c.status)}</td>
-        </tr>`
-    ).join('');
+            <td style="width:24px;text-align:center;" onclick="event.stopPropagation();toggleAction(${i})"><span class="chevron-toggle">&#9654;</span></td>
+        </tr>
+        <tr id="action-row-${i}" class="action-expand-row"><td colspan="5"><div class="action-expand-inner">${action}</div></td></tr>`;
+    }).join('');
 
     // ── Urgent Renewals ───────────────────────────────────────
     const urgentRenewals = [

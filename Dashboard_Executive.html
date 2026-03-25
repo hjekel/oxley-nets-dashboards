@@ -77,6 +77,18 @@
         .badge.green { background: #d1fae5; color: #059669; }
         .badge.blue { background: #dbeafe; color: #2563eb; }
         
+        .action-expand-row td { padding: 0 !important; border-bottom: 1px solid #e2e8f0; }
+        .action-expand-inner {
+            max-height: 0; overflow: hidden; transition: max-height 0.25s ease, padding 0.25s ease;
+            padding: 0 12px; font-size: 12px; color: #475569; line-height: 1.5;
+        }
+        .action-expand-row.open .action-expand-inner { max-height: 80px; padding: 10px 12px; }
+        .action-expand-inner strong { color: #2E8B57; font-weight: 700; }
+        .chevron-toggle {
+            cursor: pointer; font-size: 10px; color: #94a3b8; transition: transform 0.25s ease; display: inline-block;
+        }
+        tr.open .chevron-toggle { transform: rotate(90deg); }
+
         .chart-container { position: relative; height: 300px; }
         
         .quick-actions { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
@@ -188,7 +200,7 @@
             <div class="card">
                 <h3>Top 10 Customers <span>All time — Click for details</span></h3>
                 <table>
-                    <thead><tr><th>Customer</th><th>Revenue</th></tr></thead>
+                    <thead><tr><th>Customer</th><th>Revenue</th><th></th></tr></thead>
                     <tbody id="topCustomers"></tbody>
                 </table>
             </div>
@@ -353,7 +365,6 @@
         
         // Populate Top Customers with detailed data
         const topCustomers = [
-            { name: 'Cash Sale Vic', revenue: 580000, category: 'Retail', lastOrder: '2025-12-15', tenure: '5.1 years', tier: 'A', status: 'Active' },
             { name: 'Wyndham City Council', revenue: 520000, category: 'Government', lastOrder: '2025-11-20', tenure: '4.3 years', tier: 'A', status: 'Active' },
             { name: 'Turf One', revenue: 490000, category: 'Sports', lastOrder: '2025-01-15', tenure: '5.0 years', tier: 'A', status: 'At Risk' },
             { name: 'Dematic Pty Ltd', revenue: 420000, category: 'Industrial', lastOrder: '2024-08-10', tenure: '4.9 years', tier: 'A', status: 'Dormant' },
@@ -375,21 +386,23 @@
                 <div class="stat-row"><span class="stat-label">Customer Tenure</span><span class="stat-value">${customer.tenure}</span></div>
                 <div class="stat-row"><span class="stat-label">Tier</span><span class="stat-value"><span class="badge ${customer.tier === 'A' ? 'green' : 'blue'}">${customer.tier}</span></span></div>
                 <div class="stat-row"><span class="stat-label">Status</span><span class="stat-value"><span class="badge ${statusColor}">${customer.status}</span></span></div>
-                <div style="background:#f1f5f9; padding:15px; border-radius:8px; margin-top:15px;">
-                    <strong>💡 Suggested Action:</strong><br>
-                    <span style="font-size:13px; color:#475569;">
-                        ${customer.status === 'Active' ? 'RETAIN: Schedule quarterly check-in to maintain relationship.' : 
-                          customer.status === 'At Risk' ? 'NURTURE: Reach out within 7 days to understand needs.' :
-                          'WIN-BACK: Send personalized offer within 48 hours.'}
-                    </span>
-                </div>
             `;
             document.getElementById('customerModal').classList.add('active');
         }
-        
-        document.getElementById('topCustomers').innerHTML = topCustomers.map(c => 
-            `<tr onclick="showCustomerModal(${JSON.stringify(c).replace(/"/g, '&quot;')})" style="cursor:pointer;"><td>${c.name}</td><td>$${(c.revenue/1000).toFixed(0)}K</td></tr>`
-        ).join('');
+
+        function toggleExecAction(i) {
+            var row = document.getElementById('exec-action-' + i);
+            var main = document.getElementById('exec-main-' + i);
+            if (row) { row.classList.toggle('open'); main.classList.toggle('open'); }
+        }
+
+        document.getElementById('topCustomers').innerHTML = topCustomers.map((c, i) => {
+            const action = c.status === 'Active' ? '<strong>RETAIN:</strong> Schedule quarterly check-in to maintain relationship.' :
+                           c.status === 'At Risk' ? '<strong>NURTURE:</strong> Reach out within 7 days to understand needs.' :
+                           '<strong>WIN-BACK:</strong> Send personalized offer within 48 hours.';
+            return `<tr id="exec-main-${i}" onclick="showCustomerModal(${JSON.stringify(c).replace(/"/g, '&quot;')})" style="cursor:pointer;"><td>${c.name}</td><td>$${(c.revenue/1000).toFixed(0)}K</td><td style="width:24px;text-align:center;" onclick="event.stopPropagation();toggleExecAction(${i})"><span class="chevron-toggle">&#9654;</span></td></tr>` +
+                   `<tr id="exec-action-${i}" class="action-expand-row"><td colspan="3"><div class="action-expand-inner">${action}</div></td></tr>`;
+        }).join('');
         
         // Populate Urgent Renewals
         const urgentRenewals = [
