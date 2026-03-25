@@ -395,6 +395,7 @@
         }
         .action-expand-row.open .action-expand-inner { max-height: 80px; padding: 10px 16px; }
         .action-expand-inner strong { color: #2E8B57; font-weight: 700; }
+        .action-expand-inner.red strong { color: #ef4444; }
         .chevron-toggle {
             cursor: pointer; font-size: 10px; color: #94a3b8; transition: transform 0.25s ease; display: inline-block;
         }
@@ -1424,6 +1425,7 @@
                             <th class="num">Revenue</th>
                             <th>Last Order</th>
                             <th class="center">Dormant</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="cust-atrisk"></tbody>
@@ -3169,24 +3171,39 @@ chartInitFns['customers'] = function initCustomerCharts() {
     ).join('');
 
     // ── At-risk table ─────────────────────────────────────────
-    document.getElementById('cust-atrisk').innerHTML = atRiskCustomers.map(c => {
+    function showAtRiskCustomer(i) {
+        const c = atRiskCustomers[i];
         const badge = c.days > 700
             ? `<span class="badge red">${c.days}d</span>`
             : `<span class="badge orange">${c.days}d</span>`;
-        return `<tr onclick="openModal('${c.name.replace(/'/g,"\\'")}', \`
-            <div class='stat-row'><span class='stat-label'>Historical Revenue</span><span class='stat-value'>$${c.revenue.toLocaleString()}</span></div>
-            <div class='stat-row'><span class='stat-label'>Last Order</span><span class='stat-value'>${c.lastOrder}</span></div>
-            <div class='stat-row'><span class='stat-label'>Days Dormant</span><span class='stat-value'>${badge}</span></div>
-            <div class='insight red' style='margin-top:14px;'>
-                <h4>Win-Back Action</h4>
-                <p>Send a personalised offer or renewal quote referencing their last purchase. Reference their category history and current product lifecycle.</p>
-            </div>
-        \`)">
+        openModal(c.name, `
+            <div class="stat-row"><span class="stat-label">Historical Revenue</span><span class="stat-value">$${c.revenue.toLocaleString()}</span></div>
+            <div class="stat-row"><span class="stat-label">Last Order</span><span class="stat-value">${c.lastOrder}</span></div>
+            <div class="stat-row"><span class="stat-label">Days Dormant</span><span class="stat-value">${badge}</span></div>
+        `);
+    }
+    window.showAtRiskCustomer = showAtRiskCustomer;
+
+    function toggleAtRiskAction(i) {
+        const row = document.getElementById('atrisk-action-' + i);
+        const main = document.getElementById('atrisk-main-' + i);
+        if (row) { row.classList.toggle('open'); main.classList.toggle('open'); }
+    }
+    window.toggleAtRiskAction = toggleAtRiskAction;
+
+    document.getElementById('cust-atrisk').innerHTML = atRiskCustomers.map((c, i) => {
+        const badge = c.days > 700
+            ? `<span class="badge red">${c.days}d</span>`
+            : `<span class="badge orange">${c.days}d</span>`;
+        return `
+        <tr id="atrisk-main-${i}" onclick="showAtRiskCustomer(${i})" style="cursor:pointer;">
             <td style="font-weight:500;">${c.name}</td>
             <td class="num">$${(c.revenue/1000).toFixed(0)}K</td>
             <td style="font-size:12px;">${c.lastOrder}</td>
             <td class="center">${badge}</td>
-        </tr>`;
+            <td style="width:24px;text-align:center;" onclick="event.stopPropagation();toggleAtRiskAction(${i})"><span class="chevron-toggle">&#9654;</span></td>
+        </tr>
+        <tr id="atrisk-action-${i}" class="action-expand-row"><td colspan="5"><div class="action-expand-inner red"><strong>WIN-BACK:</strong> Send a personalised offer or renewal quote referencing their last purchase. Reference their category history and current product lifecycle.</div></td></tr>`;
     }).join('');
 
     // ── ABCD tier tables ──────────────────────────────────────
@@ -3665,15 +3682,53 @@ window.sendAIMessage = async function() {
     messages.scrollTop = messages.scrollHeight;
 
     try {
-        const res = await fetch(AI_WORKER_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text, dataSummary: buildDataSummary() })
-        });
+        const MAX_RETRIES = 3;
+        const RETRYABLE = ['overloaded_error', 'rate_limit_error'];
+        let data, lastError;
 
-        if (!res.ok) throw new Error('Server error ' + res.status);
+        for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+            if (attempt > 0) {
+                const wait = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
+                typing.innerHTML = `<span class="ai-typing"><span></span><span></span><span></span></span> High demand — retrying (${attempt}/${MAX_RETRIES})…`;
+                await new Promise(r => setTimeout(r, wait));
+            }
 
-        const data = await res.json();
+            let res;
+            try {
+                res = await fetch(AI_WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text, dataSummary: buildDataSummary() })
+                });
+            } catch (netErr) {
+                lastError = 'network';
+                continue;
+            }
+
+            if (!res.ok) { lastError = 'status_' + res.status; continue; }
+
+            data = await res.json();
+
+            // Detect API error responses (e.g. overloaded_error, rate_limit_error)
+            if (data.type === 'error' && data.error) {
+                lastError = data.error.type || 'unknown_api_error';
+                if (RETRYABLE.includes(lastError)) continue;
+                break; // non-retryable API error
+            }
+
+            lastError = null;
+            break; // success
+        }
+
+        if (lastError) {
+            if (lastError === 'network') {
+                throw new Error('Connection issue. Please check your internet.');
+            } else if (RETRYABLE.includes(lastError)) {
+                throw new Error('Oxley AI is temporarily busy. Please try again in a moment.');
+            } else {
+                throw new Error('Something went wrong. Please try again.');
+            }
+        }
 
         // Extract text — handle Claude API format and simpler formats
         let responseText = '';
@@ -3710,9 +3765,7 @@ window.sendAIMessage = async function() {
         messages.appendChild(exportBar);
 
     } catch (err) {
-        typing.innerHTML =
-            '⚠️ Couldn\'t reach the AI service right now — please try again in a moment.' +
-            '<br><em style="color:#64748b;font-size:11px;">(' + err.message + ')</em>';
+        typing.innerHTML = '⚠️ ' + err.message;
     } finally {
         input.disabled = false;
         sendBtn.disabled = false;
